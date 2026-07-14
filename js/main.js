@@ -68,6 +68,7 @@ function initHomeCollectionCards() {
 function initIntroSequence() {
   const intro = document.getElementById("intro");
   const heroVideo = document.getElementById("heroVideo");
+  const heroCaption = document.getElementById("heroCaption");
   if (!intro) return;
 
   const STORAGE_KEY = "moment_intro_seen";
@@ -80,19 +81,28 @@ function initIntroSequence() {
     });
   }
 
+  // 인트로에 있던 "오늘의 기억은, 내일의 향기가 됩니다." 문구가 이제 이 자리로 옮겨왔습니다.
+  // 영상이 재생을 시작하는 시점(=인트로가 끝나는 시점)에 맞춰 페이드인 시킵니다.
+  function showHeroCaption() {
+    if (!heroCaption) return;
+    heroCaption.classList.add("is-visible");
+  }
+
   // 같은 브라우저 탭(세션) 안에서 이미 인트로를 본 적이 있다면
   // 문구 애니메이션 없이 즉시 건너뛰고 영상+메뉴 화면부터 보여줍니다.
   // (다른 메뉴로 이동했다가 로고를 눌러 홈으로 돌아오는 경우도 여기에 해당)
   if (sessionStorage.getItem(STORAGE_KEY)) {
     intro.classList.add("is-skipped");
     playHeroVideo();
+    showHeroCaption();
     return;
   }
 
   const lines = Array.from(intro.querySelectorAll(".intro__line"));
 
   // 각 문구가 화면에 머무는 시간(ms). 문구 길이와 상관없이 리듬이 고르게 느껴지도록 균등하게 맞췄습니다.
-  const HOLD_DURATION = [1600, 1400, 1400, 1600];
+  // (기존 4번째 문구가 히어로 캡션으로 이동하면서 항목도 3개로 줄었습니다)
+  const HOLD_DURATION = [1600, 1400, 1400];
   const FADE_DURATION = 900; // 아래 CSS(.intro__line transition: opacity 0.9s)와 반드시 맞춰줍니다.
 
   let index = 0;
@@ -106,8 +116,9 @@ function initIntroSequence() {
     // 모든 문구를 다 보여줬다면 인트로 전체를 사라지게 함
     if (index >= lines.length) {
       intro.classList.add("is-done");
-      // 자막이 완전히 끝난 시점에 비로소 영상을 재생 시작합니다.
+      // 자막이 완전히 끝난 시점에 비로소 영상을 재생 시작하고, 히어로 캡션을 페이드인 시킵니다.
       playHeroVideo();
+      showHeroCaption();
       // 이번 세션에서는 인트로를 다시 보여주지 않도록 기록
       sessionStorage.setItem(STORAGE_KEY, "true");
       return;
