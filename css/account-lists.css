@@ -1,0 +1,196 @@
+/* 경로: css/account-lists.css */
+
+/* ==========================================================================
+   0. 토스트 (전 페이지 공용, collection.css와 동일 - 이 페이지들엔 collection.css를
+      안 불러올 수도 있어 안전하게 여기에도 포함합니다)
+   ========================================================================== */
+.moment-toast {
+  position: fixed;
+  left: 50%;
+  bottom: 32px;
+  transform: translate(-50%, 12px);
+  z-index: 300;
+  margin: 0;
+  padding: 14px 28px;
+  border-radius: 999px;
+  background-color: var(--color-charcoal);
+  color: var(--color-ivory);
+  font-size: 0.85rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--duration-fast) var(--ease-default),
+    transform var(--duration-fast) var(--ease-default);
+}
+
+.moment-toast.is-visible {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+/* ==========================================================================
+   1. 공통 레이아웃
+   ========================================================================== */
+.account-list {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 160px var(--gutter) 160px;
+}
+
+.account-list__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  padding: 60px 0;
+}
+
+.account-list__empty-text {
+  margin: 0;
+  color: var(--color-warm-gray);
+}
+
+.account-list__empty[hidden] {
+  display: none;
+}
+
+/* wishlist.html의 상품 그리드는 collection.css의 .product-grid / .product-card를
+   그대로 재사용합니다 (wishlist.html에서 css/collection.css를 함께 연결) */
+
+/* ==========================================================================
+   2. 장바구니 리스트 (cart.html 전용)
+   ========================================================================== */
+.cart-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-bottom: 48px;
+}
+
+.cart-item {
+  display: grid;
+  grid-template-columns: 100px 1fr auto auto auto 64px;
+  align-items: center;
+  gap: 20px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid rgba(42, 39, 35, 0.1);
+}
+
+.cart-item__image {
+  width: 100px;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.cart-item__name {
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-size: 1.2rem;
+  display: block;
+}
+
+.cart-item__subtitle {
+  font-size: 0.85rem;
+  color: var(--color-warm-gray);
+}
+
+.cart-item__unit-price {
+  font-size: 0.9rem;
+  color: var(--color-charcoal);
+}
+
+.cart-item__subtotal {
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.cart-item__remove {
+  justify-self: end;
+  background: none;
+  border: none;
+  color: var(--color-warm-gray);
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+/* 장바구니 내 수량 조절 (product-detail의 quantity-stepper 스타일 재사용) */
+.cart-item .quantity-stepper {
+  border: 1px solid rgba(42, 39, 35, 0.2);
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.cart-item .quantity-stepper button {
+  width: 32px;
+  height: 32px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.cart-item .quantity-stepper span {
+  width: 32px;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+/* ==========================================================================
+   3. 결제 요약
+   ========================================================================== */
+.cart-summary {
+  max-width: 360px;
+  margin-left: auto;
+  padding: 32px;
+  background-color: var(--color-ivory-dim);
+  border-radius: 16px;
+}
+
+.cart-summary[hidden] {
+  display: none;
+}
+
+.cart-summary__row {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 0 12px;
+  font-size: 0.9rem;
+  color: var(--color-warm-gray);
+}
+
+.cart-summary__row--total {
+  font-size: 1.1rem;
+  color: var(--color-charcoal);
+  font-weight: 500;
+  padding-top: 12px;
+  border-top: 1px solid rgba(42, 39, 35, 0.15);
+}
+
+.cart-summary__checkout {
+  width: 100%;
+  justify-content: center;
+  margin-top: 12px;
+}
+
+/* ==========================================================================
+   4. 반응형
+   ========================================================================== */
+@media (max-width: 640px) {
+  .cart-item {
+    grid-template-columns: 72px 1fr;
+    grid-template-areas:
+      "image name"
+      "image qty"
+      "image subtotal";
+    row-gap: 8px;
+  }
+
+  .cart-item__image {
+    grid-area: image;
+  }
+
+  .cart-summary {
+    max-width: none;
+  }
+}

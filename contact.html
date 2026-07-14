@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact | Moment | Memory Archive</title>
+    <meta
+      name="description"
+      content="Moment에 궁금한 점이나 전하고 싶은 이야기를 남겨주세요. 향으로 시작된 인연이 오래 기억되기를 바랍니다."
+    />
+
+    <!-- 구글 폰트 : 다른 페이지와 동일한 조합을 사용해 톤을 통일합니다 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- 스타일시트 연결 : 공통 스타일(style.css) + 이 페이지 전용 스타일(contact.css) -->
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/contact.css" />
+  </head>
+  <body data-auth="guest">
+    <!-- ============================================================
+         HEADER / NAV : 모든 페이지 공통 (index.html과 동일 마크업)
+         이 페이지는 히어로 영상이 없으므로 collection.html처럼
+         처음부터 is-scrolled 상태(아이보리 배경 + 어두운 글자)로 고정합니다.
+         ============================================================ -->
+    <header class="site-header is-scrolled" id="siteHeader">
+      <div class="site-header__inner">
+        <a href="index.html" class="logo" aria-label="Moment 홈으로 이동">MOMENT</a>
+
+        <nav class="main-nav" aria-label="주요 메뉴">
+          <ul class="main-nav__list">
+            <li><a href="brand.html">Brand</a></li>
+            <li><a href="collection.html">Collection</a></li>
+            <li><a href="memory-story.html">Memory Story</a></li>
+            <li><a href="archive.html">Archive</a></li>
+            <li><a href="contact.html" aria-current="page">Contact</a></li>
+          </ul>
+        </nav>
+
+        <div class="utility-nav">
+          <a href="wishlist.html" class="icon-btn utility-nav__auth-only" aria-label="찜한 상품">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M12 20s-7-4.35-9.5-8.8C.7 7.6 2 4 5.6 4c2 0 3.3 1 4.4 2.6C11.1 5 12.4 4 14.4 4 18 4 19.3 7.6 17.5 11.2 15 15.65 12 20 12 20Z" />
+            </svg>
+          </a>
+          <a href="cart.html" class="icon-btn utility-nav__auth-only" aria-label="장바구니">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M4 6h16l-1.5 10.5a2 2 0 0 1-2 1.5H7.5a2 2 0 0 1-2-1.5L4 6Z" />
+              <path d="M8 6V5a4 4 0 1 1 8 0v1" />
+            </svg>
+          </a>
+          <a href="mypage.html" class="icon-btn utility-nav__auth-only" aria-label="마이페이지">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5">
+              <circle cx="12" cy="8" r="3.4" />
+              <path d="M4.5 20c1.2-4 4-6 7.5-6s6.3 2 7.5 6" />
+            </svg>
+          </a>
+          <button type="button" class="text-btn" id="authToggleBtn">Login</button>
+        </div>
+
+        <button type="button" class="menu-toggle" id="menuToggle" aria-label="메뉴 열기" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </header>
+
+    <main>
+      <!-- ============================================================
+           SECTION 1 : CONTACT INTRO
+           ============================================================ -->
+      <section class="contact-intro">
+        <p class="eyebrow center">Contact</p>
+        <h1 class="section-title center">Let's Keep in Touch.</h1>
+        <p class="contact-intro__desc">
+          향으로 시작된 인연이<br />
+          오래 기억되기를 바랍니다.
+        </p>
+      </section>
+
+      <!-- ============================================================
+           SECTION 2 : CONTACT INFORMATION (카드 형태)
+           ============================================================ -->
+      <section class="contact-info" aria-label="연락처 정보">
+        <ul class="contact-info__grid">
+          <li class="contact-info__card">
+            <span class="contact-info__icon" aria-hidden="true">📍</span>
+            <span class="contact-info__label">Address</span>
+            <p class="contact-info__text">
+              Memory Perfume Studio<br />
+              Seoul, Korea
+            </p>
+          </li>
+          <li class="contact-info__card">
+            <span class="contact-info__icon" aria-hidden="true">✉</span>
+            <span class="contact-info__label">Email</span>
+            <p class="contact-info__text">
+              <a href="mailto:hello@memoryperfume.com">hello@memoryperfume.com</a>
+            </p>
+          </li>
+          <li class="contact-info__card">
+            <span class="contact-info__icon" aria-hidden="true">☎</span>
+            <span class="contact-info__label">Phone</span>
+            <p class="contact-info__text">
+              <a href="tel:+8221234567">+82 2-1234-5678</a>
+            </p>
+          </li>
+          <li class="contact-info__card">
+            <span class="contact-info__icon" aria-hidden="true">🕒</span>
+            <span class="contact-info__label">Business Hours</span>
+            <p class="contact-info__text">
+              MON - FRI<br />
+              10:00 - 18:00
+            </p>
+          </li>
+        </ul>
+
+        <!-- SNS 링크 : 정보 카드와 구분되도록 별도 줄로 배치 -->
+        <nav class="contact-social" aria-label="소셜 미디어">
+          <a href="#" target="_blank" rel="noopener">Instagram</a>
+          <a href="#" target="_blank" rel="noopener">YouTube</a>
+          <a href="#" target="_blank" rel="noopener">Pinterest</a>
+          <a href="#" target="_blank" rel="noopener">Threads</a>
+        </nav>
+      </section>
+
+      <!-- ============================================================
+           SECTION 3 : SEND A MESSAGE (문의 폼)
+           -------------------------------------------------------------
+           - 실제 서버 전송 없이, 프론트엔드 유효성 검사 후 완료 모달을
+             띄우는 데모입니다 (memory-story.html의 Share Your Memory와
+             동일한 방식).
+           ============================================================ -->
+      <section class="contact-form-section">
+        <div class="contact-form-section__intro">
+          <p class="eyebrow">Send a Message</p>
+          <h2 class="section-title">
+            궁금한 점이나<br />
+            전하고 싶은 이야기를 남겨주세요.
+          </h2>
+          <p class="contact-form-section__desc">가능한 빠르게 답변드리겠습니다.</p>
+        </div>
+
+        <form class="contact-form auth-only" id="contactForm" novalidate hidden>
+          <div class="form-field">
+            <label for="inquiryType">문의 유형</label>
+            <div class="select-wrap">
+              <select id="inquiryType" name="inquiryType" required>
+                <option value="" disabled selected hidden>문의 유형</option>
+                <option value="product">상품 문의</option>
+                <option value="shipping">배송 문의</option>
+                <option value="exchange">교환 / 환불</option>
+                <option value="etc">기타</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-field">
+            <label for="contactName">Name</label>
+            <input type="text" id="contactName" name="name" autocomplete="name" required />
+          </div>
+
+          <div class="form-field">
+            <label for="contactEmail">Email</label>
+            <input type="email" id="contactEmail" name="email" autocomplete="email" required />
+          </div>
+
+          <div class="form-field form-field--full">
+            <label for="contactSubject">Subject</label>
+            <input type="text" id="contactSubject" name="subject" required />
+          </div>
+
+          <div class="form-field form-field--full">
+            <label for="contactMessage">Message</label>
+            <textarea id="contactMessage" name="message" rows="6" required></textarea>
+          </div>
+
+          <p class="contact-form__error" id="contactFormError" role="alert" hidden></p>
+
+          <button type="submit" class="btn btn--dark contact-form__submit">Send Message</button>
+        </form>
+
+        <!-- 비로그인 상태에서 폼 대신 노출되는 안내 블록 (js/main.js가 로그인 상태에 따라 전환) -->
+        <div class="login-gate guest-only" id="contactLoginGate">
+          <p class="login-gate__desc">문의 남기기는 로그인 후 이용하실 수 있습니다.</p>
+          <a href="login.html" class="btn btn--dark login-gate__login-link">로그인하기</a>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           SECTION 4 : FAQ (아코디언)
+           ============================================================ -->
+      <section class="faq">
+        <p class="eyebrow center">FAQ</p>
+        <h2 class="section-title center">자주 묻는 질문</h2>
+
+        <ul class="faq-list" id="faqList">
+          <li class="faq-item">
+            <button type="button" class="faq-item__question" aria-expanded="false" aria-controls="faqAnswer1">
+              <span>배송은 얼마나 걸리나요?</span>
+              <span class="faq-item__icon" aria-hidden="true">↓</span>
+            </button>
+            <div class="faq-item__answer-wrap">
+              <div class="faq-item__answer-inner">
+                <p class="faq-item__answer" id="faqAnswer1">평균 2~3일 소요됩니다.</p>
+              </div>
+            </div>
+          </li>
+
+          <li class="faq-item">
+            <button type="button" class="faq-item__question" aria-expanded="false" aria-controls="faqAnswer2">
+              <span>교환 및 환불이 가능한가요?</span>
+              <span class="faq-item__icon" aria-hidden="true">↓</span>
+            </button>
+            <div class="faq-item__answer-wrap">
+              <div class="faq-item__answer-inner">
+                <p class="faq-item__answer" id="faqAnswer2">미개봉 제품에 한하여 가능합니다.</p>
+              </div>
+            </div>
+          </li>
+
+          <li class="faq-item">
+            <button type="button" class="faq-item__question" aria-expanded="false" aria-controls="faqAnswer3">
+              <span>향 추천을 받을 수 있나요?</span>
+              <span class="faq-item__icon" aria-hidden="true">↓</span>
+            </button>
+            <div class="faq-item__answer-wrap">
+              <div class="faq-item__answer-inner">
+                <p class="faq-item__answer" id="faqAnswer3">
+                  Memory Finder를 이용하면 당신에게 어울리는 향을 추천받을 수 있습니다.
+                </p>
+                <a href="memory-story.html" class="link-underline faq-item__link">
+                  Memory Finder 이용해보기 <span class="arrow">→</span>
+                </a>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </section>
+
+      <!-- ============================================================
+           SECTION 5 : VISIT OUR STORE
+           -------------------------------------------------------------
+           - 실제 지도 대신 쇼룸 이미지만 사용합니다.
+           - "View Location" 버튼을 누르면 같은 이미지를 더 크게 보여주는
+             라이트박스 모달(#storeImageModal)이 열립니다.
+           ============================================================ -->
+      <section class="visit-store">
+        <div class="visit-store__media">
+          <img
+            id="storeImage"
+            src="images/contact/showroom.jpg"
+            alt="Memory Perfume Studio 쇼룸 내부, 감성적인 조명과 향수 진열대"
+            loading="lazy"
+          />
+        </div>
+        <div class="visit-store__text">
+          <p class="eyebrow">Visit Our Studio</p>
+          <p class="visit-store__quote">
+            향이 시작되는 공간으로<br />
+            여러분을 초대합니다.
+          </p>
+          <p class="visit-store__desc">
+            Memory Perfume Studio에서는<br />
+            향을 직접 경험하고<br />
+            전문적인 시향 서비스를 받아보실 수 있습니다.
+          </p>
+          <button type="button" class="btn btn--outline" id="viewLocationBtn">View Location</button>
+        </div>
+      </section>
+    </main>
+
+    <!-- ============================================================
+         문의 완료 모달 (Send a Message 성공 시)
+         ============================================================ -->
+    <div class="modal-overlay" id="contactModal" hidden>
+      <div class="modal contact-modal" role="dialog" aria-modal="true" aria-labelledby="contactModalTitle">
+        <button type="button" class="contact-modal__close" id="contactModalClose" aria-label="닫기">✕</button>
+        <p class="contact-modal__icon" aria-hidden="true">✓</p>
+        <h2 class="contact-modal__title" id="contactModalTitle">감사합니다.</h2>
+        <p class="contact-modal__desc">문의가 정상적으로 접수되었습니다.</p>
+        <button type="button" class="btn btn--dark contact-modal__confirm" id="contactModalConfirm">확인</button>
+      </div>
+    </div>
+
+    <!-- ============================================================
+         쇼룸 이미지 라이트박스 모달 (View Location 클릭 시)
+         ============================================================ -->
+    <div class="modal-overlay" id="storeImageModal" hidden>
+      <div class="modal store-image-modal" role="dialog" aria-modal="true" aria-label="쇼룸 이미지 크게 보기">
+        <button type="button" class="store-image-modal__close" id="storeImageModalClose" aria-label="닫기">✕</button>
+        <img id="storeImageModalImg" src="" alt="Memory Perfume Studio 쇼룸 이미지" />
+      </div>
+    </div>
+
+    <!-- ============================================================
+         FOOTER : 모든 페이지 공통 (index.html과 동일 마크업)
+         ============================================================ -->
+    <footer class="site-footer">
+      <div class="site-footer__top">
+        <span class="logo logo--footer">MOMENT</span>
+        <p class="site-footer__philosophy">
+          우리는 향수를 파는 대신, 기억을 담는 방법을 만듭니다.<br />
+          Moment는 당신의 순간을 향으로 기록합니다.
+        </p>
+      </div>
+
+      <div class="site-footer__bottom">
+        <nav class="site-footer__social" aria-label="소셜 미디어 및 연락처">
+          <a href="#" target="_blank" rel="noopener">Instagram</a>
+          <a href="#" target="_blank" rel="noopener">YouTube</a>
+          <a href="contact.html">Contact</a>
+        </nav>
+        <p class="site-footer__copyright">© 2026 MOMENT. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <!-- 스크립트 연결 : 공통 기능(main.js) + 이 페이지 전용 기능(contact.js) -->
+    <script src="js/store.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/contact.js"></script>
+  </body>
+</html>

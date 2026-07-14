@@ -1,0 +1,685 @@
+/* 경로: css/memory-story.css */
+
+/* ==========================================================================
+   MEMORY STORY 페이지 전용 스타일
+   -------------------------------------------------------------------------
+   - 색상, 폰트, 버튼 등 공통 요소는 css/style.css의 변수를 그대로 사용합니다.
+   - 이 파일에는 memory-story.html에서만 쓰이는 섹션 스타일만 담습니다.
+   ========================================================================== */
+
+/* ==========================================================================
+   0. 토스트 (js/store.js의 showToast()가 사용, 전 페이지 공용 - 이 페이지에도
+      collection.css를 불러오지 않으므로 안전하게 여기에도 포함합니다)
+   ========================================================================== */
+.moment-toast {
+  position: fixed;
+  left: 50%;
+  bottom: 32px;
+  transform: translate(-50%, 12px);
+  z-index: 300;
+  margin: 0;
+  padding: 14px 28px;
+  border-radius: 999px;
+  background-color: var(--color-charcoal);
+  color: var(--color-ivory);
+  font-size: 0.85rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--duration-fast) var(--ease-default),
+    transform var(--duration-fast) var(--ease-default);
+}
+
+.moment-toast.is-visible {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+/* ==========================================================================
+   1. SECTION 1 : MEMORY STORY INTRO (HERO)
+   -------------------------------------------------------------------------
+   - brand.html의 .brand-hero와 같은 골격(배경 이미지 + 스크림 + 중앙 텍스트)을
+     사용하되, 이 페이지 전용 클래스를 씁니다.
+   ========================================================================== */
+.story-hero {
+  position: relative;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background-color: var(--color-black);
+}
+
+.story-hero__bg {
+  position: absolute;
+  inset: 0;
+  background-image: url("../images/memory-story/hero-bg.jpg");
+  background-size: cover;
+  background-position: center;
+}
+
+.story-hero__scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(11, 11, 10, 0.5) 0%,
+    rgba(11, 11, 10, 0.3) 45%,
+    rgba(11, 11, 10, 0.7) 100%
+  );
+}
+
+.story-hero__content {
+  position: relative;
+  z-index: 2;
+  max-width: 640px;
+  text-align: center;
+  color: var(--color-ivory);
+  padding: 0 var(--gutter);
+}
+
+.story-hero__label {
+  font-family: var(--font-accent);
+  font-style: italic;
+  letter-spacing: 0.08em;
+  font-size: 0.95rem;
+  margin: 0 0 12px;
+  color: var(--color-gold-light);
+}
+
+.story-hero__title {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  line-height: 1.5;
+  margin: 0 0 20px;
+}
+
+.story-hero__desc {
+  font-size: 1rem;
+  color: rgba(246, 243, 236, 0.85);
+  margin: 0 0 40px;
+}
+
+/* ==========================================================================
+   2. SECTION 2 : MEMORY FINDER
+   ========================================================================== */
+.finder {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 140px var(--gutter);
+}
+
+.finder-card {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 56px var(--gutter);
+  background-color: var(--color-ivory-dim);
+  border-radius: 28px;
+}
+
+/* ---------- 진행 상태 (1 - 2 - 3) ---------- */
+.finder-progress {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin: 0 0 48px;
+}
+
+.finder-progress__step {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--color-warm-gray);
+}
+
+/* 스텝 사이를 잇는 선 (첫 번째 스텝 앞에는 표시하지 않음) */
+.finder-progress__step:not(:first-child)::before {
+  content: "";
+  width: 32px;
+  height: 1px;
+  background-color: rgba(42, 39, 35, 0.2);
+  margin-right: 2px;
+}
+
+.finder-progress__dot {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-accent);
+  font-size: 0.9rem;
+  border: 1px solid rgba(42, 39, 35, 0.25);
+  transition: background-color var(--duration-fast) var(--ease-default),
+    color var(--duration-fast) var(--ease-default),
+    border-color var(--duration-fast) var(--ease-default);
+}
+
+.finder-progress__label {
+  font-size: 0.8rem;
+  letter-spacing: 0.02em;
+}
+
+/* 현재 진행 중인 스텝 */
+.finder-progress__step.is-active {
+  color: var(--color-charcoal);
+}
+
+.finder-progress__step.is-active .finder-progress__dot {
+  background-color: var(--color-gold);
+  border-color: var(--color-gold);
+  color: var(--color-charcoal);
+}
+
+/* 이미 답변을 마친 스텝 */
+.finder-progress__step.is-done .finder-progress__dot {
+  background-color: var(--color-charcoal);
+  border-color: var(--color-charcoal);
+  color: var(--color-ivory);
+}
+
+/* ---------- 퀴즈 패널 ---------- */
+/* 세 스텝 모두 선택지가 7개로 동일해, 여기에 최소 높이를 고정해 두면
+   스텝이 바뀌어도 카드 전체 높이가 늘어나거나 줄어들지 않습니다. */
+.finder-body {
+  min-height: 380px;
+}
+
+.finder-question {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(1.15rem, 2.2vw, 1.4rem);
+  text-align: center;
+  margin: 0 0 32px;
+  color: var(--color-charcoal);
+}
+
+.finder-options {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.finder-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 20px;
+  border: 1px solid rgba(42, 39, 35, 0.15);
+  border-radius: 16px;
+  background-color: var(--color-ivory);
+  color: var(--color-charcoal);
+  font-size: 0.92rem;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color var(--duration-fast) var(--ease-default),
+    border-color var(--duration-fast) var(--ease-default),
+    transform var(--duration-fast) var(--ease-default);
+}
+
+.finder-option:hover {
+  border-color: var(--color-gold);
+  transform: translateY(-2px);
+}
+
+.finder-option[aria-pressed="true"] {
+  background-color: var(--color-gold);
+  border-color: var(--color-gold);
+  color: var(--color-charcoal);
+}
+
+.finder-option__emoji {
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+/* ---------- Back / Next 버튼 ---------- */
+.finder-nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 40px;
+}
+
+.finder-nav__back:disabled,
+.finder-nav__next:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.finder-nav__back:disabled:hover,
+.finder-nav__next:disabled:hover {
+  background: transparent;
+  color: var(--color-charcoal);
+  border-color: var(--color-charcoal);
+}
+
+/* ---------- 결과 패널 ---------- */
+.finder-result[hidden] {
+  display: none;
+}
+
+.finder-result__perfume {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 40px;
+  align-items: start;
+  /* 향수 등장 애니메이션 : js/memory-story.js가 계산이 끝나면 .is-revealed를 붙여줍니다 */
+  opacity: 0;
+  transform: translateY(24px) scale(0.98);
+  transition: opacity var(--duration-slow) var(--ease-default),
+    transform var(--duration-slow) var(--ease-default);
+}
+
+.finder-result__perfume.is-revealed {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.finder-result__media img {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  border-radius: 20px;
+}
+
+.finder-result__name {
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  margin: 0 0 10px;
+  color: var(--color-charcoal);
+}
+
+.finder-result__tagline {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  color: var(--color-olive);
+  margin: 0 0 16px;
+}
+
+.finder-result__desc {
+  font-size: 0.92rem;
+  color: var(--color-charcoal);
+  margin: 0 0 24px;
+}
+
+.finder-result__notes {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0 0 28px;
+  font-size: 0.85rem;
+}
+
+/* Top / Middle / Base 한 묶음(dt+dd)이 한 줄을 차지하도록 flex row로 묶습니다 */
+.finder-result__notes div {
+  display: flex;
+  gap: 6px;
+}
+
+.finder-result__notes dt {
+  flex-shrink: 0;
+  color: var(--color-gold);
+  font-family: var(--font-accent);
+  font-style: italic;
+}
+
+.finder-result__notes dd {
+  margin: 0;
+  color: var(--color-charcoal);
+}
+
+.finder-result__buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+/* Wishlist / 장바구니 버튼 그룹 : 전체가 줄바꿈되더라도 이 둘만은 항상 나란히 붙어있게 합니다 */
+.finder-result__actions {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 12px;
+}
+
+/* 버튼 폭이 좁아져도 글자가 두 줄로 떨어져 버튼이 뚱뚱해 보이지 않도록 줄바꿈을 막습니다 */
+.finder-result__actions .btn {
+  white-space: nowrap;
+}
+
+.finder-result__retry {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  color: var(--color-warm-gray);
+  font-size: 0.85rem;
+}
+
+/* 찜 완료 상태일 때 하트 아이콘 색상 강조 */
+#resultWishBtn[aria-pressed="true"] #resultWishIcon {
+  color: var(--color-gold-light);
+}
+
+/* ==========================================================================
+   3. SECTION 4 : MEMORY STORIES
+   ========================================================================== */
+.memory-stories {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--gutter) 140px;
+}
+
+.story-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.story-card__link {
+  display: block;
+  height: 100%;
+  padding: 40px 32px;
+  background-color: var(--color-charcoal);
+  color: var(--color-ivory);
+  border-radius: 20px;
+  transition: background-color var(--duration-fast) var(--ease-default),
+    transform var(--duration-fast) var(--ease-default);
+}
+
+.story-card__link:hover {
+  background-color: var(--color-gold);
+  color: var(--color-charcoal);
+  transform: translateY(-6px);
+}
+
+.story-card__index {
+  display: inline-block;
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-size: 0.9rem;
+  letter-spacing: 0.05em;
+  color: var(--color-gold-light);
+  margin-bottom: 20px;
+}
+
+.story-card__link:hover .story-card__index {
+  color: var(--color-charcoal);
+}
+
+.story-card__title {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  margin: 0 0 16px;
+}
+
+.story-card__quote {
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: rgba(246, 243, 236, 0.75);
+  margin: 0 0 32px;
+}
+
+.story-card__link:hover .story-card__quote {
+  color: rgba(42, 39, 35, 0.75);
+}
+
+.story-card__perfume {
+  display: block;
+  font-size: 0.85rem;
+  letter-spacing: 0.02em;
+}
+
+.story-card__perfume em {
+  font-style: italic;
+  font-family: var(--font-accent);
+  font-size: 1.05rem;
+  margin-left: 6px;
+}
+
+/* ==========================================================================
+   4. SECTION 5 : SHARE YOUR MEMORY
+   ========================================================================== */
+.share-memory {
+  padding: 140px var(--gutter) 160px;
+  background-color: var(--color-ivory-dim);
+}
+
+.share-memory__inner {
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.share-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-bottom: 56px;
+}
+
+.share-form__field label,
+.share-form__label {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 0.88rem;
+  color: var(--color-olive);
+}
+
+.share-form__field input,
+.share-form__field textarea {
+  width: 100%;
+  padding: 14px 18px;
+  border: 1px solid rgba(42, 39, 35, 0.2);
+  border-radius: 12px;
+  background-color: var(--color-ivory);
+  color: var(--color-charcoal);
+  resize: vertical;
+}
+
+.share-form__field input::placeholder,
+.share-form__field textarea::placeholder {
+  color: var(--color-warm-gray);
+}
+
+.share-emotions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.emotion-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border: 1px solid rgba(42, 39, 35, 0.2);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--color-charcoal);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background-color var(--duration-fast) var(--ease-default),
+    color var(--duration-fast) var(--ease-default),
+    border-color var(--duration-fast) var(--ease-default);
+}
+
+.emotion-chip[aria-pressed="true"] {
+  background-color: var(--color-charcoal);
+  border-color: var(--color-charcoal);
+  color: var(--color-ivory);
+}
+
+.share-form__error {
+  margin: 10px 0 0;
+  font-size: 0.82rem;
+  color: #b3492f;
+}
+
+.share-form__error[hidden] {
+  display: none;
+}
+
+.share-form__submit {
+  align-self: flex-start;
+}
+
+/* ---------- Archive로 이동하는 버튼 ---------- */
+/* 이 페이지에는 더 이상 공유된 기억을 목록으로 쌓아 보여주지 않고,
+   실제로 쌓인 Story는 Archive 페이지에서 모아볼 수 있도록 안내합니다. */
+.share-memory__archive-link {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+/* ==========================================================================
+   4-1. SHARE 완료 안내 모달
+   -------------------------------------------------------------------------
+   - Share Story 제출이 성공하면 js/memory-story.js가 #shareModal의 hidden
+     속성을 지우고 .is-open 클래스를 붙여 트랜지션을 재생합니다.
+   ========================================================================== */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 400;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--gutter);
+  background: rgba(11, 11, 10, 0.55);
+  opacity: 0;
+  transition: opacity var(--duration-fast) var(--ease-default);
+}
+
+.modal-overlay[hidden] {
+  display: none;
+}
+
+.modal-overlay.is-open {
+  opacity: 1;
+}
+
+.modal {
+  max-width: 420px;
+  width: 100%;
+  padding: 48px 36px;
+  text-align: center;
+  background-color: var(--color-ivory);
+  border-radius: 24px;
+  transform: translateY(16px) scale(0.97);
+  transition: transform var(--duration-fast) var(--ease-default);
+}
+
+.modal-overlay.is-open .modal {
+  transform: translateY(0) scale(1);
+}
+
+.modal__icon {
+  font-size: 2rem;
+  margin: 0 0 16px;
+}
+
+.modal__title {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  margin: 0 0 14px;
+  color: var(--color-charcoal);
+}
+
+.modal__desc {
+  font-size: 0.92rem;
+  line-height: 1.8;
+  color: var(--color-warm-gray);
+  margin: 0 0 32px;
+}
+
+.modal__buttons {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+/* ==========================================================================
+   5. 반응형
+   ========================================================================== */
+@media (max-width: 1024px) {
+  .story-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 860px) {
+  .finder-card {
+    padding: 40px var(--gutter);
+  }
+
+  .finder-options {
+    grid-template-columns: 1fr;
+  }
+
+  .finder-body {
+    min-height: 460px;
+  }
+
+  .finder-result__perfume {
+    grid-template-columns: 1fr;
+  }
+
+  .finder-result__media img {
+    max-width: 260px;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 560px) {
+  .finder-progress__label {
+    display: none;
+  }
+
+  .finder-nav {
+    flex-direction: column-reverse;
+  }
+
+  .finder-nav .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .finder-result__buttons {
+    flex-direction: column;
+  }
+
+  /* 직계 자식만 선택해, 안에 중첩된 .finder-result__actions 버튼까지
+     100% 너비가 적용되지 않도록 합니다 */
+  .finder-result__buttons > .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .finder-result__actions {
+    width: 100%;
+  }
+
+  .finder-result__actions .btn {
+    flex: 1;
+    justify-content: center;
+    /* 기본 .btn의 좌우 여백(32px)이 좁은 화면에서는 과해 글자가 밀려 두 줄이
+       되기 쉬워, 이 버튼 그룹만 여백과 글자 크기를 살짝 줄입니다 */
+    padding-left: 14px;
+    padding-right: 14px;
+    font-size: 0.85rem;
+  }
+
+  .modal__buttons {
+    flex-direction: column;
+  }
+
+  .modal__buttons .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}

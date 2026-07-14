@@ -1,0 +1,450 @@
+/* 경로: css/collection.css */
+
+/* ==========================================================================
+   0. 토스트 알림 (js/store.js의 showToast()가 사용, 전 페이지 공용)
+   ========================================================================== */
+.moment-toast {
+  position: fixed;
+  left: 50%;
+  bottom: 32px;
+  transform: translate(-50%, 12px);
+  z-index: 300;
+  margin: 0;
+  padding: 14px 28px;
+  border-radius: 999px;
+  background-color: var(--color-charcoal);
+  color: var(--color-ivory);
+  font-size: 0.85rem;
+  letter-spacing: 0.02em;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--duration-fast) var(--ease-default),
+    transform var(--duration-fast) var(--ease-default);
+}
+
+.moment-toast.is-visible {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+/* ==========================================================================
+   1. SECTION 1 : COLLECTION INTRO
+   ========================================================================== */
+.collection-intro {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 160px var(--gutter) 80px;
+  text-align: center;
+}
+
+.collection-intro__desc {
+  font-size: 1.05rem;
+  color: var(--color-warm-gray);
+  margin: 0;
+}
+
+/* ==========================================================================
+   2. 오늘의 향수 (매일 무작위로 뽑힌 4개, js/collection.js가 렌더링)
+   -------------------------------------------------------------------------
+   - 기본 상태 : 배경 이미지 + 하단 그라데이션 스크림 + 향수 이름
+     (어떤 이미지가 와도 이름이 항상 또렷하게 읽히도록 스크림을 고정 배치)
+   - hover / focus-within : 반투명 오버레이가 올라오며
+     이름 → 디바이더 → 태그라인 → 가격 순으로 위계를 갖춘 정보가 노출
+   - 카드 전체가 <a> 링크라서 클릭하면 바로 product-detail.html로 이동합니다.
+   ========================================================================== */
+.today-perfumes {
+  padding: 0 var(--gutter) 120px;
+  max-width: var(--container-max);
+  margin: 0 auto;
+}
+
+.today-perfumes__label {
+  margin: 0 0 20px;
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--color-gold);
+}
+
+.today-perfumes__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.today-card {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  border-radius: 12px;
+  isolation: isolate;
+}
+
+.today-card__link {
+  display: block;
+  height: 100%;
+}
+
+.today-card__image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--duration-slow) var(--ease-default);
+}
+
+.today-card:hover .today-card__image,
+.today-card:focus-within .today-card__image {
+  transform: scale(1.06);
+}
+
+/* 어떤 이미지가 오든 이름이 또렷하게 보이도록 하단에 고정으로 깔아두는 그라데이션.
+   ::after로 처리해서 이미지 위, 텍스트 아래 레이어에 위치시킵니다. */
+.today-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    to top,
+    rgba(11, 11, 10, 0.65) 0%,
+    rgba(11, 11, 10, 0.15) 45%,
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+/* 기본 상태에서 보이는 향수 이름 (왼쪽 하단) */
+.today-card__label {
+  position: absolute;
+  left: 20px;
+  bottom: 20px;
+  z-index: 2;
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-size: 1.4rem;
+  color: var(--color-ivory);
+  transition: opacity var(--duration-fast) var(--ease-default),
+    transform var(--duration-fast) var(--ease-default);
+}
+
+/* 호버 시에는 오버레이 안에서 이름을 다시 보여주므로, 하단 라벨은 자연스럽게 비켜줍니다 */
+.today-card:hover .today-card__label,
+.today-card:focus-within .today-card__label {
+  opacity: 0;
+  transform: translateY(6px);
+}
+
+/* hover 시 나타나는 반투명 오버레이 : 이름 → 디바이더 → 태그라인 → 가격 */
+.today-card__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 28px;
+  text-align: center;
+  color: var(--color-ivory);
+  background: rgba(11, 11, 10, 0.78);
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity var(--duration-fast) var(--ease-default),
+    transform var(--duration-fast) var(--ease-default);
+}
+
+.today-card:hover .today-card__overlay,
+.today-card:focus-within .today-card__overlay {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 오버레이 안의 이름 : 하단 라벨과 같은 톤이지만 살짝 작게, 최상단 위계 */
+.today-card__overlay-name {
+  margin: 0;
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-size: 1.3rem;
+  color: var(--color-ivory);
+}
+
+/* 이름과 태그라인을 구분해주는 얇은 골드 디바이더
+   flex: none 으로 늘어나거나 줄어드는 것을 완전히 차단해서
+   카드마다(텍스트 길이가 달라도) 항상 정확히 같은 크기로 보이게 고정합니다. */
+.today-card__divider {
+  flex: none;
+  width: 28px;
+  height: 1px;
+  background-color: var(--color-gold);
+}
+
+/* 태그라인 : ch 단위 대신 고정 픽셀 너비를 줘서 카드마다 줄바꿈 위치가
+   들쭉날쭉해지지 않도록 통일하고, text-wrap: balance로 마지막 줄에
+   한두 글자만 남는 어색한 줄바꿈을 방지합니다.
+   따옴표는 문자열에 넣지 않고 ::before/::after로 붙여 타이포그래피를 별도 제어합니다. */
+.today-card__tagline {
+  margin: 0;
+  width: min(200px, 100%); /* 카드가 좁아지는 작은 화면에서도 넘치지 않도록 안전장치 */
+  font-family: var(--font-display);
+  font-size: 0.92rem;
+  line-height: 1.7;
+  letter-spacing: 0.01em;
+  color: rgba(246, 243, 236, 0.9);
+  text-wrap: balance;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+.today-card__tagline::before {
+  content: "“";
+}
+
+.today-card__tagline::after {
+  content: "”";
+}
+
+.today-card__price {
+  font-family: var(--font-accent);
+  font-style: italic;
+  color: var(--color-gold-light);
+  font-size: 1.05rem;
+  letter-spacing: 0.02em;
+}
+
+/* ==========================================================================
+   3. SECTION 2 : FILTER
+   ========================================================================== */
+.filter {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--gutter) 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+/* 컬렉션 카드에서 넘어온 필터가 활성화됐을 때 보이는 안내 태그 */
+.filter__active-collection {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  width: fit-content;
+  margin: 0;
+  padding: 8px 16px;
+  border-radius: 999px;
+  background-color: var(--color-charcoal);
+  color: var(--color-ivory);
+  font-size: 0.85rem;
+}
+
+.filter__active-collection[hidden] {
+  display: none;
+}
+
+#clearCollectionFilter {
+  background: none;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  font-size: 0.85rem;
+  line-height: 1;
+}
+
+.filter-group__label {
+  margin: 0 0 12px;
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-size: 0.95rem;
+  color: var(--color-olive);
+}
+
+.filter-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.filter-chip {
+  padding: 10px 20px;
+  border: 1px solid rgba(42, 39, 35, 0.2);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--color-charcoal);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background-color var(--duration-fast) var(--ease-default),
+    color var(--duration-fast) var(--ease-default),
+    border-color var(--duration-fast) var(--ease-default);
+}
+
+.filter-chip:hover {
+  border-color: var(--color-charcoal);
+}
+
+.filter-chip[aria-pressed="true"] {
+  background-color: var(--color-gold);
+  border-color: var(--color-gold);
+  color: var(--color-charcoal);
+}
+
+.filter__reset {
+  align-self: flex-start;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  color: var(--color-warm-gray);
+  font-size: 0.85rem;
+}
+
+/* ==========================================================================
+   4. SECTION 3 : PRODUCT GRID
+   ========================================================================== */
+.product-grid-section {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--gutter) 160px;
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 28px;
+}
+
+.product-card {
+  position: relative;
+}
+
+/* 이미지 + 찜/장바구니 버튼을 함께 담는 래퍼 (버튼 위치의 기준이 되는 컨테이너) */
+.product-card__media {
+  position: relative;
+}
+
+.product-card__image-link {
+  display: block;
+}
+
+.product-card__info-link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+.product-card__image-wrap {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  border-radius: 12px;
+  background-color: var(--color-ivory-dim);
+}
+
+.product-card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--duration-slow) var(--ease-default);
+}
+
+.product-card:hover .product-card__image {
+  transform: scale(1.05);
+}
+
+.product-card__info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-top: 16px;
+}
+
+.product-card__tag {
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  color: var(--color-olive);
+}
+
+.product-card__name {
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-size: 1.3rem;
+  color: var(--color-charcoal);
+}
+
+.product-card__tagline {
+  margin: 4px 0;
+  font-size: 0.85rem;
+  color: var(--color-warm-gray);
+}
+
+.product-card__price {
+  font-size: 0.95rem;
+  color: var(--color-charcoal);
+}
+
+/* 찜 / 장바구니 버튼 : 로그인(member) 상태에서만 노출. .product-card__media를 기준으로
+   위치가 잡히기 때문에, 카드 하단 텍스트 길이와 상관없이 항상 이미지의 우측 하단에 붙습니다. */
+.product-card__actions {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  z-index: 2;
+  display: none;
+  gap: 8px;
+}
+
+body[data-auth="member"] .product-card__actions {
+  display: flex;
+}
+
+.product-card__wish,
+.product-card__cart {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  background-color: rgba(246, 243, 236, 0.9);
+  cursor: pointer;
+  transition: transform var(--duration-fast) var(--ease-default);
+}
+
+.product-card__wish:hover,
+.product-card__cart:hover {
+  transform: scale(1.1);
+}
+
+.product-grid__empty {
+  text-align: center;
+  padding: 80px 0;
+  color: var(--color-warm-gray);
+}
+
+.product-grid__empty[hidden] {
+  display: none;
+}
+
+/* ==========================================================================
+   5. 반응형
+   ========================================================================== */
+@media (max-width: 1024px) {
+  .today-perfumes__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 560px) {
+  .today-perfumes__grid,
+  .product-grid {
+    grid-template-columns: 1fr;
+  }
+}

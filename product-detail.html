@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title id="pageTitle">Product | Moment | Memory Archive</title>
+    <meta id="pageDescription" name="description" content="Moment 향수 상세 정보" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/collection.css" />
+    <!-- 관련 상품 영역에서 .product-card 스타일을 재사용하기 위해 collection.css도 함께 연결 -->
+    <link rel="stylesheet" href="css/product-detail.css" />
+  </head>
+  <body data-auth="guest">
+    <header class="site-header is-scrolled" id="siteHeader">
+      <div class="site-header__inner">
+        <a href="index.html" class="logo" aria-label="Moment 홈으로 이동">MOMENT</a>
+
+        <nav class="main-nav" aria-label="주요 메뉴">
+          <ul class="main-nav__list">
+            <li><a href="brand.html">Brand</a></li>
+            <li><a href="collection.html" aria-current="page">Collection</a></li>
+            <li><a href="memory-story.html">Memory Story</a></li>
+            <li><a href="archive.html">Archive</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </nav>
+
+        <div class="utility-nav">
+          <a href="wishlist.html" class="icon-btn utility-nav__auth-only" aria-label="찜한 상품">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M12 20s-7-4.35-9.5-8.8C.7 7.6 2 4 5.6 4c2 0 3.3 1 4.4 2.6C11.1 5 12.4 4 14.4 4 18 4 19.3 7.6 17.5 11.2 15 15.65 12 20 12 20Z" />
+            </svg>
+          </a>
+          <a href="cart.html" class="icon-btn utility-nav__auth-only" aria-label="장바구니">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M4 6h16l-1.5 10.5a2 2 0 0 1-2 1.5H7.5a2 2 0 0 1-2-1.5L4 6Z" />
+              <path d="M8 6V5a4 4 0 1 1 8 0v1" />
+            </svg>
+          </a>
+          <a href="mypage.html" class="icon-btn utility-nav__auth-only" aria-label="마이페이지">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5">
+              <circle cx="12" cy="8" r="3.4" />
+              <path d="M4.5 20c1.2-4 4-6 7.5-6s6.3 2 7.5 6" />
+            </svg>
+          </a>
+          <button type="button" class="text-btn" id="authToggleBtn">Login</button>
+        </div>
+
+        <button type="button" class="menu-toggle" id="menuToggle" aria-label="메뉴 열기" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </header>
+
+    <main>
+      <div class="detail-container">
+        <a href="collection.html" class="link-underline detail-back">← Collection으로 돌아가기</a>
+
+        <!-- ============================================================
+             SECTION 1 : 상품 기본 정보 (이미지 + 구매 액션)
+             모든 텍스트는 js/product-detail.js가 URL의 ?id= 값으로
+             PERFUMES 데이터를 찾아 채워 넣습니다.
+             ============================================================ -->
+        <section class="product-detail" id="productDetail">
+          <div class="product-detail__media">
+            <img id="detailImage" src="" alt="" />
+          </div>
+
+          <div class="product-detail__info">
+            <p class="eyebrow" id="detailCollectionLink"></p>
+            <span class="product-detail__subtitle" id="detailSubtitle"></span>
+            <h1 class="product-detail__name" id="detailName"></h1>
+            <p class="product-detail__price" id="detailPrice"></p>
+            <p class="product-detail__rating" id="detailRating" aria-label=""></p>
+
+            <div class="quantity-stepper" role="group" aria-label="수량 선택">
+              <button type="button" id="qtyMinus" aria-label="수량 감소">−</button>
+              <input type="number" id="qtyInput" value="1" min="1" max="10" aria-label="수량" />
+              <button type="button" id="qtyPlus" aria-label="수량 증가">+</button>
+            </div>
+
+            <div class="product-detail__buttons">
+              <button type="button" class="btn btn--outline wish-toggle-btn" id="wishBtn" aria-pressed="false">
+                <span aria-hidden="true" id="wishIcon">♡</span>
+                <span id="wishLabel">Wishlist</span>
+              </button>
+              <button type="button" class="btn btn--dark" id="buyNowBtn">Buy Now</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============================================================
+             SECTION 2 : 노트 구성 (Top / Middle / Base)
+             ============================================================ -->
+        <section class="notes-block" aria-labelledby="notesHeading">
+          <h2 class="notes-block__heading" id="notesHeading">Notes</h2>
+          <div class="notes-block__grid" id="notesGrid"></div>
+        </section>
+
+        <!-- ============================================================
+             SECTION 3 : 향에 담긴 이야기
+             ============================================================ -->
+        <section class="detail-story" id="detailStory">
+          <div class="detail-story__lines" id="detailStoryLines"></div>
+          <p class="detail-story__desc" id="detailDescription"></p>
+        </section>
+
+        <!-- ============================================================
+             SECTION 4 : 같은 컬렉션의 다른 향 (관련 상품)
+             ============================================================ -->
+        <section class="related-products" id="relatedProducts">
+          <h2 class="related-products__heading" id="relatedHeading"></h2>
+          <ul class="product-grid" id="relatedGrid"></ul>
+        </section>
+      </div>
+    </main>
+
+    <!-- ============================================================
+         로그인 필요 안내 모달 (찜하기 등, js/main.js가 제어)
+         ============================================================ -->
+    <div class="modal-overlay" id="authRequiredModal" hidden>
+      <div class="modal" role="dialog" aria-modal="true" aria-labelledby="authRequiredTitle">
+        <p class="modal__icon" aria-hidden="true">🔒</p>
+        <h2 class="modal__title" id="authRequiredTitle">로그인이 필요해요</h2>
+        <p class="modal__desc" id="authRequiredDesc">이 기능은 로그인 후 이용하실 수 있습니다.</p>
+        <div class="modal__buttons">
+          <button type="button" class="btn btn--outline" id="authRequiredClose">닫기</button>
+          <a href="login.html" class="btn btn--dark">로그인하기</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================
+         비회원 구매 확인 모달 (Buy Now, js/product-detail.js가 제어)
+         ============================================================ -->
+    <div class="modal-overlay" id="guestCheckoutModal" hidden>
+      <div class="modal" role="dialog" aria-modal="true" aria-labelledby="guestCheckoutTitle">
+        <p class="modal__icon" aria-hidden="true">🛍️</p>
+        <h2 class="modal__title" id="guestCheckoutTitle">비회원으로 구매하시겠습니까?</h2>
+        <p class="modal__desc">
+          로그인하시면 주문 내역을<br />
+          더 편리하게 확인하실 수 있어요.
+        </p>
+        <div class="modal__buttons">
+          <button type="button" class="btn btn--outline" id="guestCheckoutClose">취소</button>
+          <button type="button" class="btn btn--outline" id="guestCheckoutLoginBtn">로그인하기</button>
+          <button type="button" class="btn btn--dark" id="guestCheckoutProceedBtn">구매하기</button>
+        </div>
+      </div>
+    </div>
+
+    <footer class="site-footer">
+      <div class="site-footer__top">
+        <span class="logo logo--footer">MOMENT</span>
+        <p class="site-footer__philosophy">
+          우리는 향수를 파는 대신, 기억을 담는 방법을 만듭니다.<br />
+          Moment는 당신의 순간을 향으로 기록합니다.
+        </p>
+      </div>
+      <div class="site-footer__bottom">
+        <nav class="site-footer__social" aria-label="소셜 미디어 및 연락처">
+          <a href="#" target="_blank" rel="noopener">Instagram</a>
+          <a href="#" target="_blank" rel="noopener">YouTube</a>
+          <a href="contact.html">Contact</a>
+        </nav>
+        <p class="site-footer__copyright">© 2026 MOMENT. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script src="js/data/perfumes-data.js"></script>
+    <script src="js/store.js"></script>
+    <script src="js/render-helpers.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/product-detail.js"></script>
+  </body>
+</html>

@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Archive | Moment | Memory Archive</title>
+    <meta
+      name="description"
+      content="Moment Archive - 공지, 이벤트, 브랜드 저널, 그리고 사람들이 남긴 기억(Shared Memories)을 한 곳에서 만나보세요."
+    />
+
+    <!-- 구글 폰트 : 다른 페이지와 동일한 조합을 사용해 톤을 통일합니다 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- 스타일시트 연결 : 공통 스타일(style.css) + 이 페이지 전용 스타일(archive.css) -->
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/archive.css" />
+  </head>
+  <body data-auth="guest">
+    <!-- ============================================================
+         HEADER / NAV : 모든 페이지 공통 (index.html과 동일 마크업)
+         이 페이지는 히어로 영상/이미지가 없으므로 collection.html처럼
+         처음부터 is-scrolled 상태(아이보리 배경 + 어두운 글자)로 고정합니다.
+         ============================================================ -->
+    <header class="site-header is-scrolled" id="siteHeader">
+      <div class="site-header__inner">
+        <a href="index.html" class="logo" aria-label="Moment 홈으로 이동">MOMENT</a>
+
+        <nav class="main-nav" aria-label="주요 메뉴">
+          <ul class="main-nav__list">
+            <li><a href="brand.html">Brand</a></li>
+            <li><a href="collection.html">Collection</a></li>
+            <li><a href="memory-story.html">Memory Story</a></li>
+            <li><a href="archive.html" aria-current="page">Archive</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </nav>
+
+        <div class="utility-nav">
+          <a href="wishlist.html" class="icon-btn utility-nav__auth-only" aria-label="찜한 상품">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M12 20s-7-4.35-9.5-8.8C.7 7.6 2 4 5.6 4c2 0 3.3 1 4.4 2.6C11.1 5 12.4 4 14.4 4 18 4 19.3 7.6 17.5 11.2 15 15.65 12 20 12 20Z" />
+            </svg>
+          </a>
+          <a href="cart.html" class="icon-btn utility-nav__auth-only" aria-label="장바구니">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M4 6h16l-1.5 10.5a2 2 0 0 1-2 1.5H7.5a2 2 0 0 1-2-1.5L4 6Z" />
+              <path d="M8 6V5a4 4 0 1 1 8 0v1" />
+            </svg>
+          </a>
+          <a href="mypage.html" class="icon-btn utility-nav__auth-only" aria-label="마이페이지">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5">
+              <circle cx="12" cy="8" r="3.4" />
+              <path d="M4.5 20c1.2-4 4-6 7.5-6s6.3 2 7.5 6" />
+            </svg>
+          </a>
+          <button type="button" class="text-btn" id="authToggleBtn">Login</button>
+        </div>
+
+        <button type="button" class="menu-toggle" id="menuToggle" aria-label="메뉴 열기" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </header>
+
+    <main>
+      <!-- ============================================================
+           SECTION 1 : ARCHIVE INTRO
+           ============================================================ -->
+      <section class="archive-intro">
+        <p class="eyebrow center">Archive</p>
+        <h1 class="section-title center">Memories continue.</h1>
+        <p class="archive-intro__desc">
+          오늘의 기록은<br />
+          내일의 추억이 됩니다.
+        </p>
+      </section>
+
+      <!-- ============================================================
+           SECTION 2 : CATEGORY 탭
+           -------------------------------------------------------------
+           - 탭을 누르면 js/archive.js의 activateTab()이 섹션 표시 여부와
+             각 섹션 안의 콘텐츠(더보기 범위/제목/페이지네이션)를 함께 갱신합니다.
+           ============================================================ -->
+      <nav class="category-tabs" id="categoryTabs" role="tablist" aria-label="Archive 카테고리">
+        <button type="button" class="category-tab" data-tab="all" aria-pressed="true" role="tab">All</button>
+        <button type="button" class="category-tab" data-tab="shared" aria-pressed="false" role="tab">
+          Shared Memories
+        </button>
+        <button type="button" class="category-tab" data-tab="notice" aria-pressed="false" role="tab">공지</button>
+        <button type="button" class="category-tab" data-tab="event" aria-pressed="false" role="tab">이벤트</button>
+        <button type="button" class="category-tab" data-tab="journal" aria-pressed="false" role="tab">
+          브랜드 저널
+        </button>
+      </nav>
+
+      <!-- ============================================================
+           SECTION 3 : FEATURED STORY (Editor's Pick)
+           -------------------------------------------------------------
+           - 매주 브랜드가 직접 고른 이야기 1개를 소개합니다.
+           - "Read More"를 누르면 js/archive.js가 하단의 공용 모달(#storyModal)에
+             전체 내용 + 추천 향 + 추천 이유를 채워 넣고 열어줍니다.
+           ============================================================ -->
+      <section class="featured-story archive-section" id="featuredStory" data-tab-groups="all shared">
+        <p class="eyebrow center">Featured Story</p>
+        <h2 class="section-title center">
+          이번 주, 에디터가<br />
+          고른 이야기
+        </h2>
+
+        <article class="featured-card">
+          <p class="featured-card__badge">Editor's Pick</p>
+          <p class="featured-card__quote">
+            오늘도<br />
+            퇴근길 버스에서<br />
+            창밖으로 노을을 바라봤다.<br />
+            그 순간 문득<br />
+            몇 년 전 여행이 떠올랐다.
+          </p>
+          <p class="featured-card__scent">추천 향 <em>ECHO</em></p>
+          <button type="button" class="link-underline featured-card__more" id="featuredReadMore">
+            Read More <span class="arrow">→</span>
+          </button>
+        </article>
+      </section>
+
+      <!-- ============================================================
+           SECTION 4 : SHARED MEMORIES
+           -------------------------------------------------------------
+           - 카드 목록은 js/archive.js가 렌더링합니다.
+             1) 브랜드가 미리 준비한 샘플 이야기 3개(ARCHIVE_SEED_STORIES)
+             2) memory-story.html의 "Share Your Memory" 폼을 통해 방문자가
+                실제로 남긴 기억(localStorage: moment_shared_stories)
+           - All 탭 : 좋아요(♥)가 가장 많은 순으로 3개만 노출 + 더보기 링크
+           - Shared Memories 탭 : 전체 목록을 6개씩 페이지네이션으로 노출
+           - 카드의 ♡ 좋아요는 클릭 시 즉시 반영되고 localStorage에 저장됩니다.
+           - "Read Story →"를 누르면 공용 모달(#storyModal)이 열립니다.
+           ============================================================ -->
+      <section class="shared-memories archive-section" id="sharedMemories" data-tab-groups="all shared">
+        <p class="eyebrow center">Shared Memories</p>
+        <h2 class="section-title center">
+          사람들의 기억이<br />
+          향기로 기록되고 있습니다.
+        </h2>
+
+        <ul class="memory-grid" id="memoryGrid"></ul>
+
+        <!-- All 탭에서만 노출되는 "전체보기" 링크 (Shared Memories 탭으로 이동) -->
+        <p class="section-more" id="memoryMore">
+          <button type="button" class="link-underline" data-goto-tab="shared">
+            Shared Memories 전체보기 <span class="arrow">→</span>
+          </button>
+        </p>
+
+        <!-- Shared Memories 탭에서 6개 초과 시에만 노출되는 페이지네이션 -->
+        <nav class="pagination" id="memoryPagination" aria-label="Shared Memories 페이지" hidden></nav>
+      </section>
+
+      <!-- ============================================================
+           SECTION 5 : NOTICE & EVENT
+           -------------------------------------------------------------
+           - 카드는 js/archive.js가 NOTICES / EVENTS 데이터로 렌더링합니다.
+           - All 탭 : 최신 공지 1개 + 최신 이벤트 1개 + 더보기 링크
+           - 공지 탭 : 제목이 "공지"로 바뀌고 공지 전체 목록만 노출
+           - 이벤트 탭 : 제목이 "이벤트"로 바뀌고 이벤트 전체 목록만 노출
+           - 카드를 누르면 링크 이동 대신 상세 모달(#infoModal)이 열립니다.
+           ============================================================ -->
+      <section class="notice-event archive-section" id="noticeEventSection" data-tab-groups="all notice event">
+        <p class="eyebrow center">Notice &amp; Event</p>
+        <h2 class="section-title center" id="noticeEventTitle">공지와 이벤트</h2>
+
+        <ul class="notice-event__grid" id="noticeEventGrid"></ul>
+
+        <!-- All 탭에서만 노출되는 "전체보기" 링크
+             공지(왼쪽) / 이벤트(오른쪽)가 나란히 붙어 헷갈리지 않도록
+             section-more--split modifier로 양쪽 끝에 떨어뜨려 배치합니다. -->
+        <p class="section-more section-more--split" id="noticeEventMore">
+          <button type="button" class="link-underline" data-goto-tab="notice">
+            공지 전체보기 <span class="arrow">→</span>
+          </button>
+          <button type="button" class="link-underline" data-goto-tab="event">
+            이벤트 전체보기 <span class="arrow">→</span>
+          </button>
+        </p>
+      </section>
+
+      <!-- ============================================================
+           SECTION 6 : BRAND JOURNAL
+           -------------------------------------------------------------
+           - 브랜드 이야기 / 향에 대한 이야기 / 기억에 대한 이야기,
+             세 가지 주제를 다루는 브랜드 콘텐츠 영역입니다.
+           ============================================================ -->
+      <section class="journal archive-section" id="journalSection" data-tab-groups="all journal">
+        <p class="eyebrow center">Brand Journal</p>
+        <h2 class="section-title center">브랜드가 전하는 이야기</h2>
+        <p class="journal__topics">브랜드 이야기 · 향에 대한 이야기 · 기억에 대한 이야기</p>
+
+        <article class="journal-card">
+          <h3 class="journal-card__title">향은 왜 기억을 떠올릴까요?</h3>
+          <p class="journal-card__desc">
+            후각은 감정을 담당하는 뇌와<br />
+            가장 가까운 감각입니다.
+          </p>
+          <a href="brand.html" class="link-underline">Read Story <span class="arrow">→</span></a>
+        </article>
+      </section>
+
+      <!-- 필터 결과가 하나도 없을 때(현재 탭 로직상 발생하지 않지만, 확장 대비 안전장치) -->
+      <p class="archive-empty" id="archiveEmpty" hidden>해당 카테고리에는 아직 게시물이 없어요.</p>
+    </main>
+
+    <!-- ============================================================
+         STORY DETAIL 모달 (Featured Story / Shared Memories 공용)
+         ============================================================ -->
+    <div class="modal-overlay" id="storyModal" hidden>
+      <div class="modal story-modal" role="dialog" aria-modal="true" aria-labelledby="storyModalTitle">
+        <button type="button" class="story-modal__close" id="storyModalClose" aria-label="닫기">✕</button>
+
+        <p class="story-modal__tag" id="storyModalTag"></p>
+        <h2 class="story-modal__title" id="storyModalTitle"></h2>
+        <time class="story-modal__date" id="storyModalDate"></time>
+
+        <div class="story-modal__body" id="storyModalBody"></div>
+
+        <div class="story-modal__recommend">
+          <p class="story-modal__recommend-label">추천 향</p>
+          <p class="story-modal__scent" id="storyModalScent"></p>
+          <p class="story-modal__reason" id="storyModalReason"></p>
+        </div>
+
+        <div class="story-modal__actions">
+          <a href="collection.html" class="btn btn--dark" id="storyModalCollectionLink">View Collection</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================
+         INFO 모달 (공지 / 이벤트 공용)
+         -------------------------------------------------------------
+         - Notice & Event 카드를 클릭하면 js/archive.js가 이 모달에
+           내용을 채우고 엽니다. story-modal과 같은 시각 언어를 재사용합니다.
+         ============================================================ -->
+    <div class="modal-overlay" id="infoModal" hidden>
+      <div class="modal story-modal" role="dialog" aria-modal="true" aria-labelledby="infoModalTitle">
+        <button type="button" class="story-modal__close" id="infoModalClose" aria-label="닫기">✕</button>
+
+        <p class="story-modal__tag" id="infoModalTag"></p>
+        <h2 class="story-modal__title" id="infoModalTitle"></h2>
+        <time class="story-modal__date" id="infoModalDate"></time>
+
+        <div class="story-modal__body" id="infoModalBody"></div>
+
+        <div class="story-modal__actions">
+          <a href="#" class="btn btn--dark" id="infoModalCta" hidden></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================
+         로그인 필요 안내 모달 (공용, js/main.js가 제어)
+         ============================================================ -->
+    <div class="modal-overlay" id="authRequiredModal" hidden>
+      <div class="modal" role="dialog" aria-modal="true" aria-labelledby="authRequiredTitle">
+        <p class="modal__icon" aria-hidden="true">🔒</p>
+        <h2 class="modal__title" id="authRequiredTitle">로그인이 필요해요</h2>
+        <p class="modal__desc" id="authRequiredDesc">이 기능은 로그인 후 이용하실 수 있습니다.</p>
+        <div class="modal__buttons">
+          <button type="button" class="btn btn--outline" id="authRequiredClose">닫기</button>
+          <a href="login.html" class="btn btn--dark">로그인하기</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================
+         FOOTER : 모든 페이지 공통 (index.html과 동일 마크업)
+         ============================================================ -->
+    <footer class="site-footer">
+      <div class="site-footer__top">
+        <span class="logo logo--footer">MOMENT</span>
+        <p class="site-footer__philosophy">
+          우리는 향수를 파는 대신, 기억을 담는 방법을 만듭니다.<br />
+          Moment는 당신의 순간을 향으로 기록합니다.
+        </p>
+      </div>
+
+      <div class="site-footer__bottom">
+        <nav class="site-footer__social" aria-label="소셜 미디어 및 연락처">
+          <a href="#" target="_blank" rel="noopener">Instagram</a>
+          <a href="#" target="_blank" rel="noopener">YouTube</a>
+          <a href="contact.html">Contact</a>
+        </nav>
+        <p class="site-footer__copyright">© 2026 MOMENT. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <!-- 스크립트 연결 : 데이터 → 저장소 → 공통 기능 → 이 페이지 전용 기능 순서로 로드 -->
+    <script src="js/data/perfumes-data.js"></script>
+    <script src="js/store.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/archive.js"></script>
+  </body>
+</html>

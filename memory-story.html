@@ -1,0 +1,388 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Memory Story | Moment | Memory Archive</title>
+    <meta
+      name="description"
+      content="당신의 기억에는 어떤 향이 어울릴까요? 세 가지 질문으로 당신에게 어울리는 향을 찾아보세요."
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- 스타일시트 연결 : 공통 스타일(style.css) + 이 페이지 전용 스타일(memory-story.css) -->
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/memory-story.css" />
+  </head>
+  <body data-auth="guest">
+    <!-- ============================================================
+         HEADER / NAV : 모든 페이지 공통 (index.html과 동일 마크업)
+         ============================================================ -->
+    <header class="site-header" id="siteHeader">
+      <div class="site-header__inner">
+        <a href="index.html" class="logo" aria-label="Moment 홈으로 이동">MOMENT</a>
+
+        <nav class="main-nav" aria-label="주요 메뉴">
+          <ul class="main-nav__list">
+            <li><a href="brand.html">Brand</a></li>
+            <li><a href="collection.html">Collection</a></li>
+            <li><a href="memory-story.html" aria-current="page">Memory Story</a></li>
+            <li><a href="archive.html">Archive</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </nav>
+
+        <div class="utility-nav">
+          <a href="wishlist.html" class="icon-btn utility-nav__auth-only" aria-label="찜한 상품">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M12 20s-7-4.35-9.5-8.8C.7 7.6 2 4 5.6 4c2 0 3.3 1 4.4 2.6C11.1 5 12.4 4 14.4 4 18 4 19.3 7.6 17.5 11.2 15 15.65 12 20 12 20Z" />
+            </svg>
+          </a>
+          <a href="cart.html" class="icon-btn utility-nav__auth-only" aria-label="장바구니">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M4 6h16l-1.5 10.5a2 2 0 0 1-2 1.5H7.5a2 2 0 0 1-2-1.5L4 6Z" />
+              <path d="M8 6V5a4 4 0 1 1 8 0v1" />
+            </svg>
+          </a>
+          <a href="mypage.html" class="icon-btn utility-nav__auth-only" aria-label="마이페이지">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5">
+              <circle cx="12" cy="8" r="3.4" />
+              <path d="M4.5 20c1.2-4 4-6 7.5-6s6.3 2 7.5 6" />
+            </svg>
+          </a>
+          <button type="button" class="text-btn" id="authToggleBtn">Login</button>
+        </div>
+
+        <button type="button" class="menu-toggle" id="menuToggle" aria-label="메뉴 열기" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </header>
+
+    <main>
+      <!-- ============================================================
+           SECTION 1 : MEMORY STORY INTRO (HERO)
+           -------------------------------------------------------------
+           - id="hero"는 js/main.js의 헤더 스크롤 감지(IntersectionObserver)가
+             그대로 재사용되도록 다른 히어로 섹션과 동일하게 맞춘 값입니다.
+           - "Find Your Memory" 버튼을 누르면 아래 Finder 섹션으로 스크롤 이동합니다.
+           ============================================================ -->
+      <section class="story-hero" id="hero">
+        <div class="story-hero__bg" aria-hidden="true"></div>
+        <div class="story-hero__scrim" aria-hidden="true"></div>
+
+        <div class="story-hero__content">
+          <p class="story-hero__label">MEMORY STORY</p>
+          <h1 class="story-hero__title">
+            당신의 기억에는<br />
+            어떤 향이 어울릴까요?
+          </h1>
+          <p class="story-hero__desc">당신에게 어울리는 향을 찾아보세요.</p>
+          <a href="#finder" class="btn btn--outline-light">
+            Find Your Memory <span class="arrow">→</span>
+          </a>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           SECTION 2 : MEMORY FINDER
+           -------------------------------------------------------------
+           - STEP 1~3 질문은 js/memory-story.js의 STEPS 배열에 정의되어 있고,
+             현재 스텝만 화면에 렌더링됩니다(뒤로가기/다음 버튼으로 이동).
+           - 세 스텝 모두 선택지가 7개로 동일해, .finder-card에 최소 높이를
+             고정해도 스텝이 바뀔 때 카드 높이가 늘어나지 않습니다.
+           - 3단계를 모두 마치면 같은 카드 안에서 결과(Result) 화면으로 전환됩니다.
+           ============================================================ -->
+      <section class="finder" id="finder">
+        <p class="eyebrow center">Memory Finder</p>
+        <h2 class="section-title center">
+          세 가지 질문으로<br />
+          당신의 향을 찾아드릴게요.
+        </h2>
+
+        <div class="finder-card" id="finderCard">
+          <!-- 진행 상태 표시 (1 - 2 - 3) -->
+          <ol class="finder-progress" id="finderProgress" aria-label="진행 단계">
+            <li class="finder-progress__step" data-step="0">
+              <span class="finder-progress__dot">1</span>
+              <span class="finder-progress__label">순간</span>
+            </li>
+            <li class="finder-progress__step" data-step="1">
+              <span class="finder-progress__dot">2</span>
+              <span class="finder-progress__label">감정</span>
+            </li>
+            <li class="finder-progress__step" data-step="2">
+              <span class="finder-progress__dot">3</span>
+              <span class="finder-progress__label">향</span>
+            </li>
+          </ol>
+
+          <!-- ---------- 퀴즈 패널 : 현재 스텝의 질문 + 선택지 ---------- -->
+          <div class="finder-quiz" id="finderQuiz">
+            <div class="finder-body">
+              <h3 class="finder-question" id="finderQuestion"></h3>
+              <div
+                class="finder-options"
+                id="finderOptions"
+                role="group"
+                aria-labelledby="finderQuestion"
+              ></div>
+            </div>
+
+            <div class="finder-nav">
+              <button type="button" class="btn btn--outline finder-nav__back" id="finderBack" disabled>
+                ← Back
+              </button>
+              <button type="button" class="btn btn--dark finder-nav__next" id="finderNext" disabled>
+                Next
+              </button>
+            </div>
+          </div>
+
+          <!-- ---------- 결과 패널 : 3스텝 완료 후 노출 ---------- -->
+          <div class="finder-result" id="finderResult" hidden>
+            <div class="finder-result__perfume" id="finderResultPerfume">
+              <div class="finder-result__media">
+                <img id="resultImage" src="" alt="" />
+              </div>
+
+              <div class="finder-result__info">
+                <p class="eyebrow" id="resultEyebrow">당신에게 추천하는 향</p>
+                <h3 class="finder-result__name" id="resultName"></h3>
+                <p class="finder-result__tagline" id="resultTagline"></p>
+                <p class="finder-result__desc" id="resultDesc"></p>
+
+                <dl class="finder-result__notes" id="resultNotes"></dl>
+
+                <div class="finder-result__buttons">
+                  <a href="collection.html" class="btn btn--outline" id="resultViewCollection">View Collection</a>
+
+                  <!-- Wishlist / 장바구니 버튼은 하나의 그룹으로 묶어 항상 나란히 붙어 보이게 합니다 -->
+                  <div class="finder-result__actions">
+                    <button type="button" class="btn btn--outline" id="resultWishBtn">
+                      <span aria-hidden="true" id="resultWishIcon">♡</span>
+                      <span id="resultWishLabel">Add Wishlist</span>
+                    </button>
+                    <button type="button" class="btn btn--dark" id="resultAddCartBtn">
+                      <span aria-hidden="true">🛒</span>
+                      <span>장바구니 담기</span>
+                    </button>
+                  </div>
+                </div>
+
+                <button type="button" class="finder-result__retry link-underline" id="finderRetry">
+                  다시 질문에 답하기
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           SECTION 4 : MEMORY STORIES
+           -------------------------------------------------------------
+           - 실제 브랜드가 만든 이야기 카드 3개. 카드 전체가 <a>라서 클릭하면
+             바로 해당 향수의 상세 페이지(product-detail.html)로 이동합니다.
+           ============================================================ -->
+      <section class="memory-stories" id="memoryStories">
+        <p class="eyebrow center">Memory Stories</p>
+        <h2 class="section-title center">
+          실제 브랜드가 기록한<br />
+          기억의 이야기
+        </h2>
+
+        <ul class="story-grid">
+          <li class="story-card">
+            <a href="product-detail.html?id=voyage" class="story-card__link">
+              <span class="story-card__index">Story 01</span>
+              <h3 class="story-card__title">첫 여행</h3>
+              <p class="story-card__quote">
+                기차 창밖으로<br />
+                처음 바다를 보던 날.
+              </p>
+              <span class="story-card__perfume">
+                추천 향 <em>Journey</em>
+              </span>
+            </a>
+          </li>
+
+          <li class="story-card">
+            <a href="product-detail.html?id=drizzle" class="story-card__link">
+              <span class="story-card__index">Story 02</span>
+              <h3 class="story-card__title">비 오는 오후</h3>
+              <p class="story-card__quote">
+                창가에 앉아<br />
+                책을 읽던 시간.
+              </p>
+              <span class="story-card__perfume">
+                추천 향 <em>Rain</em>
+              </span>
+            </a>
+          </li>
+
+          <li class="story-card">
+            <a href="product-detail.html?id=dawn" class="story-card__link">
+              <span class="story-card__index">Story 03</span>
+              <h3 class="story-card__title">첫 출근</h3>
+              <p class="story-card__quote">
+                긴장과 설렘으로<br />
+                가득했던 아침.
+              </p>
+              <span class="story-card__perfume">
+                추천 향 <em>Dawn</em>
+              </span>
+            </a>
+          </li>
+        </ul>
+      </section>
+
+      <!-- ============================================================
+           SECTION 5 : SHARE YOUR MEMORY
+           -------------------------------------------------------------
+           - 실제 서버 전송 없이 프론트엔드 데모로 구현합니다.
+           - 제출한 기억은 이 페이지에 목록으로 쌓이지 않고 localStorage에만
+             저장되며(js/memory-story.js 참고), 제출 직후에는 안내 모달을 띄워
+             "Archive에서 확인할 수 있다"는 것만 알려줍니다.
+           ============================================================ -->
+      <section class="share-memory" id="shareMemory">
+        <div class="share-memory__inner">
+          <p class="eyebrow center">Share Your Memory</p>
+          <h2 class="section-title center">
+            당신의 기억도<br />
+            누군가의 향기가 될 수 있습니다.
+          </h2>
+
+          <!-- 다른 사람들이 남긴 기억은 이 페이지가 아니라 Archive에서 모아볼 수 있습니다 -->
+          <div class="share-memory__archive-link">
+            <a href="archive.html" class="btn btn--outline">
+              Archive에서 다른 기억 보기 <span class="arrow">→</span>
+            </a>
+          </div>
+
+          <form class="share-form auth-only" id="shareForm" novalidate hidden>
+            <div class="share-form__field">
+              <label for="storyTitle">기억 제목</label>
+              <input
+                type="text"
+                id="storyTitle"
+                name="storyTitle"
+                placeholder="오늘의 기억을 적어보세요."
+                required
+              />
+            </div>
+
+            <div class="share-form__field">
+              <label for="storyContent">내용</label>
+              <textarea
+                id="storyContent"
+                name="storyContent"
+                rows="4"
+                placeholder="당신의 이야기를 들려주세요."
+                required
+              ></textarea>
+            </div>
+
+            <div class="share-form__field">
+              <span class="share-form__label">감정 선택</span>
+              <div class="share-emotions" id="shareEmotions" role="group" aria-label="감정(컬렉션) 선택">
+                <button type="button" class="emotion-chip" data-emotion="healing" aria-pressed="false">
+                  <span aria-hidden="true">🌿</span> Healing
+                </button>
+                <button type="button" class="emotion-chip" data-emotion="love" aria-pressed="false">
+                  <span aria-hidden="true">🤍</span> Love
+                </button>
+                <button type="button" class="emotion-chip" data-emotion="new-beginning" aria-pressed="false">
+                  <span aria-hidden="true">🌅</span> New Beginning
+                </button>
+                <button type="button" class="emotion-chip" data-emotion="nostalgia" aria-pressed="false">
+                  <span aria-hidden="true">🍂</span> Nostalgia
+                </button>
+              </div>
+              <p class="share-form__error" id="shareFormError" hidden></p>
+            </div>
+
+            <button type="submit" class="btn btn--dark share-form__submit">Share Story</button>
+          </form>
+
+          <!-- 비로그인 상태에서 폼 대신 노출되는 안내 블록 (js/main.js가 로그인 상태에 따라 전환) -->
+          <div class="login-gate guest-only" id="shareLoginGate">
+            <p class="login-gate__desc">기억 공유는 로그인 후 이용하실 수 있습니다.</p>
+            <a href="login.html" class="btn btn--dark login-gate__login-link">로그인하기</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ============================================================
+         SHARE 완료 안내 모달
+         -------------------------------------------------------------
+         - Share Story 제출이 성공하면 js/memory-story.js가 hidden 속성을
+           제거해 이 모달을 띄웁니다. 배경(overlay) 클릭이나 "확인" 버튼,
+           Esc 키로 닫을 수 있습니다.
+         ============================================================ -->
+    <div class="modal-overlay" id="shareModal" hidden>
+      <div class="modal" role="dialog" aria-modal="true" aria-labelledby="shareModalTitle">
+        <p class="modal__icon" aria-hidden="true">🌸</p>
+        <h2 class="modal__title" id="shareModalTitle">감사합니다.</h2>
+        <p class="modal__desc">
+          당신의 기억이 향기로 기록되었습니다.<br />
+          기록된 Story는 Archive에서 확인할 수 있습니다.
+        </p>
+        <div class="modal__buttons">
+          <button type="button" class="btn btn--outline" id="shareModalClose">확인</button>
+          <a href="archive.html" class="btn btn--dark" id="shareModalArchive">Archive에서 보기</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================
+         로그인 필요 안내 모달 (공용, js/main.js가 제어)
+         ============================================================ -->
+    <div class="modal-overlay" id="authRequiredModal" hidden>
+      <div class="modal" role="dialog" aria-modal="true" aria-labelledby="authRequiredTitle">
+        <p class="modal__icon" aria-hidden="true">🔒</p>
+        <h2 class="modal__title" id="authRequiredTitle">로그인이 필요해요</h2>
+        <p class="modal__desc" id="authRequiredDesc">이 기능은 로그인 후 이용하실 수 있습니다.</p>
+        <div class="modal__buttons">
+          <button type="button" class="btn btn--outline" id="authRequiredClose">닫기</button>
+          <a href="login.html" class="btn btn--dark">로그인하기</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================
+         FOOTER : 모든 페이지 공통 (index.html과 동일 마크업)
+         ============================================================ -->
+    <footer class="site-footer">
+      <div class="site-footer__top">
+        <span class="logo logo--footer">MOMENT</span>
+        <p class="site-footer__philosophy">
+          우리는 향수를 파는 대신, 기억을 담는 방법을 만듭니다.<br />
+          Moment는 당신의 순간을 향으로 기록합니다.
+        </p>
+      </div>
+
+      <div class="site-footer__bottom">
+        <nav class="site-footer__social" aria-label="소셜 미디어 및 연락처">
+          <a href="#" target="_blank" rel="noopener">Instagram</a>
+          <a href="#" target="_blank" rel="noopener">YouTube</a>
+          <a href="contact.html">Contact</a>
+        </nav>
+        <p class="site-footer__copyright">© 2026 MOMENT. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <!-- 스크립트 연결 : 데이터 → 저장소 → 공통 기능 → 이 페이지 전용 기능 순서로 로드 -->
+    <script src="js/data/perfumes-data.js"></script>
+    <script src="js/store.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/memory-story.js"></script>
+  </body>
+</html>

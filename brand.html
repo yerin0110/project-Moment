@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Brand | Moment | Memory Archive</title>
+    <meta
+      name="description"
+      content="Moment의 브랜드 철학 - 향은 보여주기 위한 것이 아니라, 나의 하루와 감정, 그리고 소중한 기억을 담는 가장 개인적인 표현입니다."
+    />
+
+    <!-- 구글 폰트 : 홈과 동일한 조합을 사용해 페이지 간 톤을 통일합니다 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- 스타일시트 연결 : 공통 스타일(style.css) + 이 페이지 전용 스타일(brand.css) -->
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/brand.css" />
+  </head>
+  <body data-auth="guest">
+    <!-- ============================================================
+       HEADER / NAV : 모든 페이지 공통 (index.html과 동일 마크업)
+       ============================================================ -->
+    <header class="site-header" id="siteHeader">
+      <div class="site-header__inner">
+        <a href="index.html" class="logo" aria-label="Moment 홈으로 이동"
+          >MOMENT</a
+        >
+
+        <nav class="main-nav" aria-label="주요 메뉴">
+          <ul class="main-nav__list">
+            <li><a href="brand.html" aria-current="page">Brand</a></li>
+            <li><a href="collection.html">Collection</a></li>
+            <li><a href="memory-story.html">Memory Story</a></li>
+            <li><a href="archive.html">Archive</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </nav>
+
+        <div class="utility-nav">
+          <a
+            href="wishlist.html"
+            class="icon-btn utility-nav__auth-only"
+            aria-label="찜한 상품"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              width="20"
+              height="20"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+            >
+              <path
+                d="M12 20s-7-4.35-9.5-8.8C.7 7.6 2 4 5.6 4c2 0 3.3 1 4.4 2.6C11.1 5 12.4 4 14.4 4 18 4 19.3 7.6 17.5 11.2 15 15.65 12 20 12 20Z"
+              />
+            </svg>
+          </a>
+          <a
+            href="cart.html"
+            class="icon-btn utility-nav__auth-only"
+            aria-label="장바구니"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              width="20"
+              height="20"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+            >
+              <path
+                d="M4 6h16l-1.5 10.5a2 2 0 0 1-2 1.5H7.5a2 2 0 0 1-2-1.5L4 6Z"
+              />
+              <path d="M8 6V5a4 4 0 1 1 8 0v1" />
+            </svg>
+          </a>
+          <a
+            href="mypage.html"
+            class="icon-btn utility-nav__auth-only"
+            aria-label="마이페이지"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              width="20"
+              height="20"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+            >
+              <circle cx="12" cy="8" r="3.4" />
+              <path d="M4.5 20c1.2-4 4-6 7.5-6s6.3 2 7.5 6" />
+            </svg>
+          </a>
+          <button type="button" class="text-btn" id="authToggleBtn">
+            Login
+          </button>
+        </div>
+
+        <button
+          type="button"
+          class="menu-toggle"
+          id="menuToggle"
+          aria-label="메뉴 열기"
+          aria-expanded="false"
+        >
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </header>
+
+    <main>
+      <!-- ============================================================
+         SECTION 1 : HERO
+         배경 이미지 위에 브랜드명과 두 줄의 카피를 겹쳐 보여줍니다.
+         id="hero"는 main.js의 헤더 스크롤 감지 로직이 그대로 재사용되도록
+         홈 화면과 동일하게 맞춘 값입니다.
+         ============================================================ -->
+      <section class="brand-hero" id="hero">
+        <div class="brand-hero__bg" aria-hidden="true"></div>
+        <div class="brand-hero__scrim" aria-hidden="true"></div>
+
+        <div class="brand-hero__content">
+          <p class="brand-hero__label">BRAND</p>
+          <p class="brand-hero__quote-en">Every memory has its own scent.</p>
+          <p class="brand-hero__quote-kr">
+            모든 기억에는<br />
+            그에 어울리는 향이 있습니다.
+          </p>
+        </div>
+
+        <!-- 스크롤 유도 -->
+        <div class="brand-hero__scroll-cue" aria-hidden="true">
+          <span class="brand-hero__scroll-line"></span>
+          <span class="brand-hero__scroll-text">Scroll</span>
+        </div>
+      </section>
+
+      <!-- ============================================================
+         SECTION 2 : BRAND PHILOSOPHY
+         왼쪽 이미지 + 오른쪽 텍스트의 2단 구성
+         ============================================================ -->
+      <section class="philosophy">
+        <div class="philosophy__media reveal-up">
+          <img
+            src="images/brand/philosophy-watch.png"
+            alt="오래된 책과 회중시계, 돋보기가 놓인 정물 사진"
+            loading="lazy"
+          />
+        </div>
+        <div class="philosophy__text reveal-up">
+          <p class="eyebrow">Brand Philosophy</p>
+          <p class="philosophy__paragraph">
+            향은 누군가에게 보여주기 위한 것이 아니라,<br />
+            나의 하루와 감정, 그리고 소중한 기억을 담는<br />
+            가장 개인적인 표현입니다.
+          </p>
+          <p class="philosophy__paragraph">
+            오늘의 기억은 시간이 지나도 향기로 남아,<br />
+            내일의 나를 다시 그 순간으로 데려갑니다.
+          </p>
+        </div>
+      </section>
+
+      <!-- ============================================================
+         SECTION 3 : OUR VALUES
+         마우스를 올리면(hover) / 키보드로 포커스하면 카드가 살짝 확대됩니다.
+         ============================================================ -->
+      <section class="values">
+        <h2 class="sr-only">Our Values</h2>
+        <ul class="values-grid">
+          <li class="value-card reveal-up">
+            <span class="value-card__name">MEMORY</span>
+            <p class="value-card__desc">
+              하루의 기억을<br />
+              향으로 기록합니다.
+            </p>
+          </li>
+          <li class="value-card reveal-up">
+            <span class="value-card__name">IDENTITY</span>
+            <p class="value-card__desc">
+              성별보다<br />
+              취향을 담습니다.
+            </p>
+          </li>
+          <li class="value-card reveal-up">
+            <span class="value-card__name">TIMELESS</span>
+            <p class="value-card__desc">
+              시간이 지나도<br />
+              기억되는 향.
+            </p>
+          </li>
+          <li class="value-card reveal-up">
+            <span class="value-card__name">BALANCE</span>
+            <p class="value-card__desc">
+              과하지 않지만<br />
+              오래 남는 향.
+            </p>
+          </li>
+        </ul>
+      </section>
+
+      <!-- ============================================================
+         SECTION 4 : THE ESSENCE OF MEMORY
+         -------------------------------------------------------------
+         - 왼쪽 텍스트 / 이미지 / 오른쪽 텍스트가 나란히 놓이는 3단 구성입니다.
+         - 배경은 화면 전체 너비로 채우고(.essence), 실제 콘텐츠는
+           다른 섹션과 동일한 최대 너비로 가운데 정렬(.essence__inner)합니다.
+         - 이미지는 애니메이션 없이 항상 고정된 크기로 노출됩니다(reveal-up 미적용).
+         - 문장(.essence__line)에만 ".reveal-up"을 적용해, 왼쪽/오른쪽 같은 줄
+           번째끼리 동시에 한 줄씩 나타나도록 css/brand.css에서 딜레이를 맞췄습니다.
+         ============================================================ -->
+      <section class="essence">
+        <div class="essence__inner">
+          <div class="essence__grid">
+            <div class="essence__text essence__text--left">
+              <p class="essence__line reveal-up">
+                우리는 오래된 편지를 꺼내 읽듯,
+              </p>
+              <p class="essence__line reveal-up">익숙한 향을 맡는 순간</p>
+              <p class="essence__line reveal-up">
+                잊고 있던 시간과 감정을 다시 마주합니다.
+              </p>
+            </div>
+
+            <div class="essence__media">
+              <img
+                src="images/brand/essence-letters.jpg"
+                alt="끈으로 묶인 오래된 편지 다발"
+                loading="lazy"
+              />
+            </div>
+
+            <div class="essence__text essence__text--right">
+              <p class="essence__line reveal-up">향은 눈에 보이지 않지만,</p>
+              <p class="essence__line reveal-up">
+                가장 오래 마음속에 머무는 기억이 됩니다.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================
+         SECTION 5 : CLOSING MESSAGE
+         ============================================================ -->
+      <section class="closing">
+        <p class="closing__text reveal-up">
+          오늘의 기억은,<br />
+          내일의 향기가 됩니다.
+        </p>
+      </section>
+    </main>
+
+    <!-- ============================================================
+       FOOTER : 모든 페이지 공통 (index.html과 동일 마크업)
+       ============================================================ -->
+    <footer class="site-footer">
+      <div class="site-footer__top">
+        <span class="logo logo--footer">MOMENT</span>
+        <p class="site-footer__philosophy">
+          우리는 향수를 파는 대신, 기억을 담는 방법을 만듭니다.<br />
+          Moment는 당신의 순간을 향으로 기록합니다.
+        </p>
+      </div>
+
+      <div class="site-footer__bottom">
+        <nav class="site-footer__social" aria-label="소셜 미디어 및 연락처">
+          <a href="#" target="_blank" rel="noopener">Instagram</a>
+          <a href="#" target="_blank" rel="noopener">YouTube</a>
+          <a href="contact.html">Contact</a>
+        </nav>
+        <p class="site-footer__copyright">
+          © 2026 MOMENT. All rights reserved.
+        </p>
+      </div>
+    </footer>
+
+    <!-- 스크립트 연결 : 공통 기능(main.js) + 이 페이지 전용 기능(brand.js) -->
+    <script src="js/store.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/brand.js"></script>
+  </body>
+</html>

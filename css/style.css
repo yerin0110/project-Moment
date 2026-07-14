@@ -1,0 +1,1026 @@
+/* 경로: css/style.css */
+
+/* ==========================================================================
+   1. CSS 변수 (Design Tokens)
+   -------------------------------------------------------------------------
+   - 컬러 : Ivory(배경) / Warm Gray(보조) / Charcoal(본문) / Olive(포인트 텍스트)
+             + Gold(액센트), 인트로 전용 Black
+   - 타이포 : 한글 세리프(Display) + 한글 산세리프(Body) + 영문 세리프(포인트)
+   ========================================================================== */
+:root {
+  /* Color */
+  --color-ivory: #f6f3ec;
+  --color-ivory-dim: #efeae0;
+  --color-warm-gray: #ab9f8f;
+  --color-charcoal: #2a2723;
+  --color-olive: #6e6a4c;
+  --color-black: #0b0b0a;
+  --color-white: #ffffff;
+  --color-gold: #b08d57;
+  --color-gold-light: #d8bd91;
+
+  /* Typography */
+  --font-display: "Noto Serif KR", serif;
+  --font-body: "Noto Sans KR", sans-serif;
+  --font-accent: "Cormorant Garamond", serif;
+
+  /* Layout */
+  --header-height: 76px;
+  --container-max: 1240px;
+  --gutter: clamp(20px, 5vw, 64px);
+
+  /* Motion */
+  --ease-default: cubic-bezier(0.22, 1, 0.36, 1);
+  --duration-fast: 0.3s;
+  --duration-slow: 0.9s;
+}
+
+/* ==========================================================================
+   2. 리셋 & 기본 스타일
+   ========================================================================== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  color: var(--color-charcoal);
+  background-color: var(--color-ivory);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul,
+dl {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+button,
+input {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+/* 스크린리더 전용 텍스트 (시각적으로 숨기되 접근성은 유지) */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* 키보드 포커스 표시 */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 3px;
+}
+
+/* 사용자가 모션 최소화를 선호할 경우 애니메이션 축소 */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ==========================================================================
+   3. 공통 유틸리티 (eyebrow, 버튼, 밑줄 링크 등)
+   ========================================================================== */
+.eyebrow {
+  font-family: var(--font-accent);
+  font-style: italic;
+  letter-spacing: 0.08em;
+  color: var(--color-olive);
+  font-size: 0.95rem;
+  margin: 0 0 12px;
+}
+
+.eyebrow.center,
+.section-title.center {
+  text-align: center;
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  line-height: 1.45;
+  margin: 0 0 48px;
+  color: var(--color-charcoal);
+}
+
+.section-cta {
+  text-align: center;
+  margin-top: 48px;
+}
+
+.link-underline {
+  display: inline-block;
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 4px;
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+  transition: opacity var(--duration-fast) var(--ease-default);
+}
+
+.link-underline:hover {
+  opacity: 0.6;
+}
+
+.arrow {
+  display: inline-block;
+  transition: transform var(--duration-fast) var(--ease-default);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 32px;
+  font-size: 0.95rem;
+  letter-spacing: 0.03em;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: background-color var(--duration-fast) var(--ease-default),
+    color var(--duration-fast) var(--ease-default),
+    border-color var(--duration-fast) var(--ease-default);
+}
+
+.btn--outline-light {
+  color: var(--color-ivory);
+  border-color: rgba(246, 243, 236, 0.6);
+  background: transparent;
+}
+
+.btn--outline-light:hover {
+  background: var(--color-ivory);
+  color: var(--color-charcoal);
+}
+
+.btn--dark {
+  background: var(--color-charcoal);
+  color: var(--color-ivory);
+}
+
+.btn--dark:hover {
+  background: var(--color-gold);
+  color: var(--color-charcoal);
+}
+
+/* ==========================================================================
+   4. 인트로 오버레이 (Section 1)
+   -------------------------------------------------------------------------
+   - 검은 화면 위 문구가 순서대로 페이드 인/아웃 됩니다.
+   - JS가 각 .intro__line 에 is-active 클래스를 순환 부여합니다.
+   - 전체 시퀀스가 끝나면 .intro 자체에 is-done 클래스가 붙어 사라지고
+     아래의 영상 히어로가 자연스럽게 드러납니다.
+   ========================================================================== */
+.intro {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-black);
+  transition: opacity var(--duration-slow) var(--ease-default);
+}
+
+.intro.is-done {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* 이미 인트로를 본 적이 있는 재방문(같은 세션)에서는
+   페이드 애니메이션 없이 곧바로 숨겨서 영상/메뉴가 바로 보이도록 함 */
+.intro.is-skipped {
+  display: none;
+}
+
+.intro__line {
+  position: absolute;
+  max-width: 90vw;
+  text-align: center;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(1.3rem, 3.2vw, 2.1rem);
+  color: var(--color-ivory);
+  opacity: 0;
+  /* 위아래로 움직이는 효과를 빼고 순수 크로스페이드로 전환해 더 매끄럽게 보이도록 함 */
+  transition: opacity 0.9s ease-in-out;
+}
+
+.intro__line.is-active {
+  opacity: 1;
+}
+
+/* ==========================================================================
+   5. 헤더 & 내비게이션
+   ========================================================================== */
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  height: var(--header-height);
+  display: flex;
+  align-items: center;
+  color: var(--color-ivory);
+  transition: background-color var(--duration-fast) var(--ease-default),
+    color var(--duration-fast) var(--ease-default);
+}
+
+/* 스크롤 시 인트로/영상 위가 아닐 때는 아이보리 배경으로 전환 */
+.site-header.is-scrolled {
+  background-color: rgba(246, 243, 236, 0.92);
+  color: var(--color-charcoal);
+  backdrop-filter: blur(6px);
+  box-shadow: 0 1px 0 rgba(42, 39, 35, 0.08);
+}
+
+.site-header__inner {
+  width: 100%;
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+}
+
+.logo {
+  font-family: var(--font-accent);
+  font-size: 1.35rem;
+  letter-spacing: 0.16em;
+  font-weight: 500;
+}
+
+.main-nav__list {
+  display: flex;
+  gap: 36px;
+}
+
+.main-nav__list a {
+  font-size: 0.92rem;
+  letter-spacing: 0.03em;
+  position: relative;
+  padding-bottom: 4px;
+}
+
+.main-nav__list a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform var(--duration-fast) var(--ease-default);
+}
+
+.main-nav__list a:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.utility-nav {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.text-btn {
+  background: none;
+  border: 1px solid currentColor;
+  color: inherit;
+  padding: 8px 18px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  transition: background-color var(--duration-fast) var(--ease-default),
+    color var(--duration-fast) var(--ease-default);
+}
+
+.text-btn:hover {
+  background-color: currentColor;
+}
+
+.site-header.is-scrolled .text-btn:hover {
+  color: var(--color-ivory);
+}
+
+.site-header:not(.is-scrolled) .text-btn:hover {
+  color: var(--color-charcoal);
+}
+
+/* 로그인 상태(body[data-auth="member"])에서만 찜/장바구니 아이콘 노출 */
+.utility-nav__auth-only {
+  display: none;
+}
+
+body[data-auth="member"] .utility-nav__auth-only {
+  display: inline-flex;
+}
+
+/* 모바일 햄버거 버튼 (기본 숨김, 반응형에서 노출) */
+.menu-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+}
+
+.menu-toggle span {
+  width: 22px;
+  height: 1px;
+  background: currentColor;
+}
+
+/* ==========================================================================
+   6. HERO (Section 2) : 영상 배경 + Brand Message
+   ========================================================================== */
+.hero {
+  position: relative;
+  height: 100vh;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  overflow: hidden;
+  background-color: var(--color-black);
+}
+
+.hero__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero__scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(11, 11, 10, 0.15) 0%, rgba(11, 11, 10, 0.55) 100%);
+}
+
+.hero__content {
+  position: relative;
+  z-index: 2;
+  padding-bottom: 96px;
+  text-align: center;
+}
+
+/* ==========================================================================
+   7. BRAND STORY (Section 3)
+   ========================================================================== */
+.brand-story {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: var(--gutter);
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 140px var(--gutter);
+}
+
+.brand-story__media img {
+  width: 100%;
+  aspect-ratio: 6 / 7;
+  object-fit: cover;
+  border-radius: 30px;
+}
+
+.brand-story__quote {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(1.3rem, 2.4vw, 1.9rem);
+  line-height: 1.6;
+  color: var(--color-charcoal);
+  margin: 0 0 32px;
+}
+
+/* ==========================================================================
+   8. COLLECTION (Section 4) : 향수 카드
+   -------------------------------------------------------------------------
+   - 카드 배경은 각 <li>의 인라인 style="background-image: url(...)"로 지정
+     (⚠️ CSS 커스텀 프로퍼티(--card-image)에 url()을 넣으면, 그 상대경로가
+      "선언된 위치(index.html)"가 아니라 "var()가 쓰이는 스타일시트 위치
+      (이 css/style.css 파일)" 기준으로 다시 해석되는 스펙 특성이 있어
+      실제 파일이 있어도 404가 나는 문제가 있었습니다. 그래서 커스텀 프로퍼티를
+      거치지 않고 background-image를 인라인에서 바로 지정합니다.)
+   - 기본 상태 : 이미지만 살짝 보이는 미니멀한 카드
+   - hover 상태 : 이미지가 어두워지며 Top/Middle/Base 노트가 나타남
+   ========================================================================== */
+.collection {
+  padding: 0 var(--gutter) 140px;
+  max-width: var(--container-max);
+  margin: 0 auto;
+}
+
+.perfume-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.perfume-card {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  background-color: var(--color-ivory-dim); /* 이미지 로드 전/실패 시 대비용 배경 */
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* 카드 어둡게 하는 오버레이
+   - 평소에도 이름/태그라인이 잘 보이도록 하단부터 어두워지는 그라데이션을 항상 깔아둠
+   - hover 시 카드 전체를 짙게 덮어 태그 목록(memoryTags)이 잘 보이게 전환 */
+.perfume-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(11, 11, 10, 0) 35%,
+    rgba(11, 11, 10, 0.8) 100%
+  );
+  transition: background var(--duration-fast) var(--ease-default);
+  z-index: 0;
+}
+
+.perfume-card:hover::before,
+.perfume-card:focus-within::before {
+  background: rgba(11, 11, 10, 0.72);
+}
+
+/* 카드 전체를 감싸는 링크 : 카드 하나를 통째로 클릭 가능한 영역으로 만들어줍니다.
+   (오버레이 ::before 보다 위에 오도록 position/z-index를 여기서 담당) */
+.perfume-card__link {
+  position: relative;
+  z-index: 1;
+  display: block;
+  height: 100%;
+  color: inherit;
+  text-decoration: none;
+}
+
+.perfume-card__notes {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 24px;
+  color: var(--color-ivory);
+}
+
+/* 컬렉션 태그라인 (예: "Take a Deep Breath") : 카드 이름 위에 오는 작은 영문 캡션 */
+.perfume-card__eyebrow {
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  color: var(--color-gold-light);
+  text-shadow: 0 1px 4px rgba(11, 11, 10, 0.5);
+  margin-bottom: 2px;
+}
+
+.perfume-card__name {
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-size: 1.6rem;
+  text-shadow: 0 1px 4px rgba(11, 11, 10, 0.5);
+}
+
+.perfume-card__desc {
+  font-size: 0.85rem;
+  color: var(--color-gold-light);
+  text-shadow: 0 1px 4px rgba(11, 11, 10, 0.5);
+  margin-bottom: 16px;
+}
+
+/* 기억 키워드 태그 목록 : note-list와 동일하게 평소엔 숨어 있다가 hover 시 펼쳐짐 */
+.perfume-card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height var(--duration-fast) var(--ease-default),
+    opacity var(--duration-fast) var(--ease-default);
+}
+
+.perfume-card:hover .perfume-card__tags,
+.perfume-card:focus-within .perfume-card__tags {
+  max-height: 120px;
+  opacity: 1;
+}
+
+.perfume-card__tags li {
+  font-size: 0.72rem;
+  padding: 4px 10px;
+  border: 1px solid rgba(246, 243, 236, 0.35);
+  border-radius: 999px;
+  color: var(--color-ivory);
+  white-space: nowrap;
+}
+
+/* 노트 정보 : 평소에는 숨겨져 있다가 hover 시 서서히 나타남 */
+.note-list {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height var(--duration-fast) var(--ease-default),
+    opacity var(--duration-fast) var(--ease-default);
+}
+
+.perfume-card:hover .note-list,
+.perfume-card:focus-within .note-list {
+  max-height: 200px;
+  opacity: 1;
+}
+
+.note-list > div {
+  display: flex;
+  gap: 8px;
+  font-size: 0.78rem;
+  padding: 4px 0;
+  border-top: 1px solid rgba(246, 243, 236, 0.2);
+}
+
+.note-list dt {
+  flex-shrink: 0;
+  width: 56px;
+  color: var(--color-gold-light);
+  letter-spacing: 0.04em;
+}
+
+.note-list dd {
+  /* 브라우저 기본 여백(margin-left: 40px)을 제거하고,
+     좁은 카드 폭에서도 줄바꿈이 단어 단위로 깔끔하게 떨어지도록 처리 */
+  margin: 0;
+  flex: 1;
+  line-height: 1.5;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+/* ==========================================================================
+   9. MEMORY PREVIEW (Section 5)
+   ========================================================================== */
+.memory-preview {
+  background-color: var(--color-ivory-dim);
+  padding: 140px var(--gutter);
+  transition: background-color var(--duration-slow) var(--ease-default);
+}
+
+.memory-preview.has-result {
+  background-color: var(--color-charcoal);
+  color: var(--color-ivory);
+}
+
+.memory-preview.has-result .section-title,
+.memory-preview.has-result .eyebrow {
+  color: var(--color-ivory);
+}
+
+.memory-preview__inner {
+  max-width: 720px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.memory-options {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+.memory-chip {
+  cursor: pointer;
+}
+
+.memory-chip input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+}
+
+.memory-chip span {
+  display: inline-block;
+  padding: 12px 24px;
+  border: 1px solid var(--color-olive);
+  border-radius: 999px;
+  font-size: 0.9rem;
+  transition: background-color var(--duration-fast) var(--ease-default),
+    color var(--duration-fast) var(--ease-default);
+}
+
+.memory-chip input:checked + span {
+  background-color: var(--color-gold);
+  border-color: var(--color-gold);
+  color: var(--color-charcoal);
+}
+
+.memory-result {
+  margin-top: 56px;
+}
+
+.memory-result[hidden] {
+  display: none;
+}
+
+.memory-result__text {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  margin-bottom: 28px;
+}
+
+/* ==========================================================================
+   10. FROM THE ARCHIVE (Section 6)
+   ========================================================================== */
+.archive {
+  padding: 140px var(--gutter);
+  max-width: var(--container-max);
+  margin: 0 auto;
+}
+
+.archive-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.archive-card a {
+  display: block;
+  height: 100%;
+  padding: 40px 28px;
+  background-color: var(--color-ivory);
+  border: 1px solid rgba(42, 39, 35, 0.1);
+  transition: background-color var(--duration-fast) var(--ease-default);
+}
+
+.archive-card a:hover {
+  background-color: var(--color-charcoal);
+  color: var(--color-ivory);
+}
+
+.archive-card__tag {
+  display: inline-block;
+  font-family: var(--font-accent);
+  font-style: italic;
+  color: var(--color-gold);
+  margin-bottom: 20px;
+  font-size: 0.9rem;
+  letter-spacing: 0.05em;
+}
+
+.archive-card__title {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  line-height: 1.6;
+  margin: 0 0 24px;
+}
+
+.archive-card__date {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--color-warm-gray);
+  margin-bottom: 28px;
+}
+
+.archive-card a:hover .archive-card__date {
+  color: var(--color-gold-light);
+}
+
+.archive-card__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+}
+
+.archive-card a:hover .arrow {
+  transform: translateX(6px);
+}
+
+/* ==========================================================================
+   11. NEWSLETTER (Section 7)
+   ========================================================================== */
+.newsletter {
+  padding: 140px var(--gutter) 160px;
+  max-width: 640px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.newsletter__form {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.newsletter__input {
+  flex: 1;
+  min-width: 0;
+  padding: 14px 20px;
+  border: 1px solid var(--color-charcoal);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--color-charcoal);
+}
+
+.newsletter__input::placeholder {
+  color: var(--color-warm-gray);
+}
+
+.newsletter__caption {
+  font-size: 0.82rem;
+  color: var(--color-warm-gray);
+}
+
+/* ==========================================================================
+   12. FOOTER
+   ========================================================================== */
+.site-footer {
+  background-color: var(--color-charcoal);
+  color: var(--color-ivory);
+  padding: 80px var(--gutter) 40px;
+}
+
+.site-footer__top {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
+  padding-bottom: 48px;
+  border-bottom: 1px solid rgba(246, 243, 236, 0.15);
+}
+
+.logo--footer {
+  font-size: 1.2rem;
+}
+
+.site-footer__philosophy {
+  max-width: 420px;
+  font-size: 0.9rem;
+  color: var(--color-warm-gray);
+}
+
+.site-footer__bottom {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 16px;
+  padding-top: 32px;
+  font-size: 0.82rem;
+  color: var(--color-warm-gray);
+}
+
+.site-footer__social {
+  display: flex;
+  gap: 24px;
+}
+
+.site-footer__social a:hover {
+  color: var(--color-gold-light);
+}
+
+/* ==========================================================================
+   13. 반응형 (Tablet / Mobile)
+   ========================================================================== */
+@media (max-width: 1024px) {
+  .perfume-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .archive-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 860px) {
+  .main-nav {
+    display: none;
+  }
+
+  .menu-toggle {
+    display: flex;
+  }
+
+  /* 모바일에서 햄버거 버튼 클릭 시 펼쳐지는 드롭다운 메뉴 */
+  .main-nav.is-open {
+    display: block;
+    position: absolute;
+    top: var(--header-height);
+    left: 0;
+    right: 0;
+    background-color: var(--color-ivory);
+    box-shadow: 0 12px 24px rgba(42, 39, 35, 0.08);
+  }
+
+  .main-nav.is-open .main-nav__list {
+    flex-direction: column;
+    gap: 0;
+    padding: 12px var(--gutter) 24px;
+  }
+
+  .main-nav.is-open .main-nav__list a {
+    display: block;
+    padding: 14px 0;
+    color: var(--color-charcoal);
+    border-bottom: 1px solid rgba(42, 39, 35, 0.08);
+  }
+
+  .brand-story {
+    grid-template-columns: 1fr;
+    padding: 96px var(--gutter);
+  }
+
+  .newsletter__form {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 560px) {
+  .perfume-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .site-header__inner {
+    gap: 12px;
+  }
+
+  .utility-nav {
+    gap: 10px;
+  }
+}
+
+/* ==========================================================================
+   14. 공용 모달 (로그인 필요 안내 / 비회원 구매 확인 등)
+   -------------------------------------------------------------------------
+   - archive.css, memory-story.css에도 유사한 정의가 있지만, 두 파일을 불러오지
+     않는 페이지(product-detail.html 등)에서도 모달이 동작하도록 공통으로 둡니다.
+   ========================================================================== */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 400;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--gutter);
+  background: rgba(11, 11, 10, 0.55);
+  opacity: 0;
+  transition: opacity var(--duration-fast) var(--ease-default);
+}
+
+.modal-overlay[hidden] {
+  display: none;
+}
+
+.modal-overlay.is-open {
+  opacity: 1;
+}
+
+.modal {
+  max-width: 420px;
+  width: 100%;
+  padding: 48px 36px;
+  text-align: center;
+  background-color: var(--color-ivory);
+  border-radius: 24px;
+  transform: translateY(16px) scale(0.97);
+  transition: transform var(--duration-fast) var(--ease-default);
+}
+
+.modal-overlay.is-open .modal {
+  transform: translateY(0) scale(1);
+}
+
+.modal__icon {
+  font-size: 2rem;
+  margin: 0 0 16px;
+}
+
+.modal__title {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  margin: 0 0 14px;
+  color: var(--color-charcoal);
+}
+
+.modal__desc {
+  font-size: 0.92rem;
+  line-height: 1.8;
+  color: var(--color-warm-gray);
+  margin: 0 0 32px;
+  word-break: keep-all;
+}
+
+.modal__buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+
+@media (max-width: 560px) {
+  .modal__buttons {
+    flex-direction: column;
+  }
+
+  .modal__buttons .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* ==========================================================================
+   15. 로그인 게이트 (로그인해야 이용 가능한 폼 대신 노출되는 안내 블록)
+   -------------------------------------------------------------------------
+   - .auth-only : 로그인(member) 상태에서만 보여야 하는 블록 (기본은 숨김)
+   - .guest-only : 비로그인(guest) 상태에서만 보여야 하는 블록 (기본은 노출)
+   - 실제 전환은 js/main.js의 applyState()가 hidden 속성을 토글하며 처리합니다.
+   - [hidden] 선택자는 .contact-form(grid) / .share-form(flex)처럼 각자 고유한
+     display 값을 가진 요소보다 항상 우선 적용되도록 클래스+속성 조합으로 명시합니다.
+   ========================================================================== */
+.auth-only[hidden],
+.guest-only[hidden] {
+  display: none;
+}
+
+.login-gate {
+  text-align: center;
+  padding: 56px 32px;
+  border: 1px solid rgba(42, 39, 35, 0.12);
+  border-radius: 20px;
+  background-color: var(--color-ivory-dim);
+}
+
+.login-gate__desc {
+  margin: 0 0 24px;
+  color: var(--color-warm-gray);
+  font-size: 0.95rem;
+  line-height: 1.8;
+  word-break: keep-all;
+}

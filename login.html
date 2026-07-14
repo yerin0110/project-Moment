@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login | Moment | Memory Archive</title>
+    <meta name="description" content="Moment 로그인" />
+
+    <!-- 구글 폰트 : 다른 페이지와 동일한 조합을 사용해 톤을 통일합니다 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- 스타일시트 연결 : 공통 스타일(style.css) + 이 페이지 전용 스타일(auth.css) -->
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/auth.css" />
+  </head>
+  <body data-auth="guest">
+    <!-- ============================================================
+         HEADER / NAV : 모든 페이지 공통 (index.html과 동일 마크업)
+         이 페이지는 히어로 영상이 없으므로 collection.html처럼
+         처음부터 is-scrolled 상태(아이보리 배경 + 어두운 글자)로 고정합니다.
+         ============================================================ -->
+    <header class="site-header is-scrolled" id="siteHeader">
+      <div class="site-header__inner">
+        <a href="index.html" class="logo" aria-label="Moment 홈으로 이동">MOMENT</a>
+
+        <nav class="main-nav" aria-label="주요 메뉴">
+          <ul class="main-nav__list">
+            <li><a href="brand.html">Brand</a></li>
+            <li><a href="collection.html">Collection</a></li>
+            <li><a href="memory-story.html">Memory Story</a></li>
+            <li><a href="archive.html">Archive</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </nav>
+
+        <div class="utility-nav">
+          <a href="wishlist.html" class="icon-btn utility-nav__auth-only" aria-label="찜한 상품">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M12 20s-7-4.35-9.5-8.8C.7 7.6 2 4 5.6 4c2 0 3.3 1 4.4 2.6C11.1 5 12.4 4 14.4 4 18 4 19.3 7.6 17.5 11.2 15 15.65 12 20 12 20Z" />
+            </svg>
+          </a>
+          <a href="cart.html" class="icon-btn utility-nav__auth-only" aria-label="장바구니">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M4 6h16l-1.5 10.5a2 2 0 0 1-2 1.5H7.5a2 2 0 0 1-2-1.5L4 6Z" />
+              <path d="M8 6V5a4 4 0 1 1 8 0v1" />
+            </svg>
+          </a>
+          <a href="mypage.html" class="icon-btn utility-nav__auth-only" aria-label="마이페이지">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5">
+              <circle cx="12" cy="8" r="3.4" />
+              <path d="M4.5 20c1.2-4 4-6 7.5-6s6.3 2 7.5 6" />
+            </svg>
+          </a>
+          <button type="button" class="text-btn" id="authToggleBtn">Login</button>
+        </div>
+
+        <button type="button" class="menu-toggle" id="menuToggle" aria-label="메뉴 열기" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </header>
+
+    <main>
+      <!-- ============================================================
+           LOGIN FORM
+           ============================================================ -->
+      <section class="auth-section">
+        <div class="auth-section__intro">
+          <p class="eyebrow center">Login</p>
+          <h1 class="section-title center">다시 만나서 반가워요.</h1>
+          <p class="auth-section__desc">로그인하고 당신의 기억을 이어가 보세요.</p>
+        </div>
+
+        <form class="auth-form" id="loginForm" novalidate>
+          <div class="form-field">
+            <label for="loginEmail">Email</label>
+            <input type="email" id="loginEmail" name="email" autocomplete="email" required />
+          </div>
+
+          <div class="form-field">
+            <label for="loginPassword">Password</label>
+            <input type="password" id="loginPassword" name="password" autocomplete="current-password" required />
+          </div>
+
+          <p class="auth-form__error" id="loginError" role="alert" hidden></p>
+
+          <button type="submit" class="btn btn--dark auth-form__submit">Login</button>
+        </form>
+
+        <p class="auth-switch">
+          아직 계정이 없으신가요? <a href="signup.html">회원가입</a>
+        </p>
+      </section>
+    </main>
+
+    <!-- ============================================================
+         FOOTER : 모든 페이지 공통 (index.html과 동일 마크업)
+         ============================================================ -->
+    <footer class="site-footer">
+      <div class="site-footer__top">
+        <span class="logo logo--footer">MOMENT</span>
+        <p class="site-footer__philosophy">
+          우리는 향수를 파는 대신, 기억을 담는 방법을 만듭니다.<br />
+          Moment는 당신의 순간을 향으로 기록합니다.
+        </p>
+      </div>
+
+      <div class="site-footer__bottom">
+        <nav class="site-footer__social" aria-label="소셜 미디어 및 연락처">
+          <a href="#" target="_blank" rel="noopener">Instagram</a>
+          <a href="#" target="_blank" rel="noopener">YouTube</a>
+          <a href="contact.html">Contact</a>
+        </nav>
+        <p class="site-footer__copyright">© 2026 MOMENT. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <!-- 스크립트 연결 : 저장소(store.js) → 공통 기능(main.js) → 이 페이지 전용 기능(auth.js) -->
+    <script src="js/store.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+      // 회원가입 직후 넘어온 이메일(?email=)이 있으면 입력창에 미리 채워줍니다.
+      const prefillEmail = new URLSearchParams(window.location.search).get("email");
+      if (prefillEmail) document.getElementById("loginEmail").value = prefillEmail;
+    </script>
+  </body>
+</html>

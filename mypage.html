@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Page | Moment | Memory Archive</title>
+    <meta name="description" content="내가 찜한 향, 장바구니, 공유한 기억, 문의 내역을 한 곳에서 확인하세요." />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- 스타일시트 연결 : 공통(style) + 상품 카드(collection) + 계정 목록(account-lists) + 이 페이지 전용(mypage) -->
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/collection.css" />
+    <link rel="stylesheet" href="css/account-lists.css" />
+    <link rel="stylesheet" href="css/mypage.css" />
+  </head>
+  <body data-auth="member">
+    <!-- 마이페이지는 로그인 상태에서만 의미가 있는 페이지라 data-auth를 member로 시작합니다. -->
+    <header class="site-header is-scrolled" id="siteHeader">
+      <div class="site-header__inner">
+        <a href="index.html" class="logo" aria-label="Moment 홈으로 이동">MOMENT</a>
+        <nav class="main-nav" aria-label="주요 메뉴">
+          <ul class="main-nav__list">
+            <li><a href="brand.html">Brand</a></li>
+            <li><a href="collection.html">Collection</a></li>
+            <li><a href="memory-story.html">Memory Story</a></li>
+            <li><a href="archive.html">Archive</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </nav>
+        <div class="utility-nav">
+          <a href="wishlist.html" class="icon-btn utility-nav__auth-only" aria-label="찜한 상품">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M12 20s-7-4.35-9.5-8.8C.7 7.6 2 4 5.6 4c2 0 3.3 1 4.4 2.6C11.1 5 12.4 4 14.4 4 18 4 19.3 7.6 17.5 11.2 15 15.65 12 20 12 20Z" />
+            </svg>
+          </a>
+          <a href="cart.html" class="icon-btn utility-nav__auth-only" aria-label="장바구니">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M4 6h16l-1.5 10.5a2 2 0 0 1-2 1.5H7.5a2 2 0 0 1-2-1.5L4 6Z" />
+              <path d="M8 6V5a4 4 0 1 1 8 0v1" />
+            </svg>
+          </a>
+          <a href="mypage.html" class="icon-btn utility-nav__auth-only" aria-label="마이페이지" aria-current="page">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5">
+              <circle cx="12" cy="8" r="3.4" />
+              <path d="M4.5 20c1.2-4 4-6 7.5-6s6.3 2 7.5 6" />
+            </svg>
+          </a>
+          <button type="button" class="text-btn" id="authToggleBtn">Login</button>
+        </div>
+        <button type="button" class="menu-toggle" id="menuToggle" aria-label="메뉴 열기" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </header>
+
+    <main>
+      <section class="account-list">
+        <p class="eyebrow center">My Memory</p>
+        <h1 class="section-title center">마이페이지</h1>
+        <p class="mypage__welcome" id="mypageWelcome"></p>
+
+        <!-- ============================================================
+             탭 메뉴 : 찜한 향 / 장바구니 / 공유한 기억 / 문의 내역
+             JS(js/mypage.js)가 data-tab 값과 .mypage-panel[data-panel]을
+             매칭해 하나씩만 보여줍니다.
+             ============================================================ -->
+        <div class="mypage-tabs" id="mypageTabs" role="tablist" aria-label="마이페이지 메뉴">
+          <button type="button" class="mypage-tab" data-tab="wishlist" aria-pressed="true">찜한 향</button>
+          <button type="button" class="mypage-tab" data-tab="cart" aria-pressed="false">장바구니</button>
+          <button type="button" class="mypage-tab" data-tab="memories" aria-pressed="false">공유한 기억</button>
+          <button type="button" class="mypage-tab" data-tab="inquiries" aria-pressed="false">문의 내역</button>
+        </div>
+
+        <!-- ============================================================
+             PANEL 1 : 찜한 향 (Wishlist)
+             wishlist.html과 동일하게 render-helpers.js의 product-card를 재사용합니다.
+             ============================================================ -->
+        <div class="mypage-panel" data-panel="wishlist">
+          <ul class="product-grid" id="mypageWishlistGrid"></ul>
+          <div class="account-list__empty" id="mypageWishlistEmpty" hidden>
+            <p class="account-list__empty-text">아직 찜한 향수가 없어요.</p>
+            <a href="collection.html" class="btn btn--outline">Collection 둘러보기 →</a>
+          </div>
+        </div>
+
+        <!-- ============================================================
+             PANEL 2 : 장바구니 (Cart)
+             cart.html과 동일한 목록/합계 구조를 재사용합니다.
+             ============================================================ -->
+        <div class="mypage-panel" data-panel="cart" hidden>
+          <ul class="cart-list" id="mypageCartList"></ul>
+          <div class="account-list__empty" id="mypageCartEmpty" hidden>
+            <p class="account-list__empty-text">장바구니가 비어 있어요.</p>
+            <a href="collection.html" class="btn btn--outline">Collection 둘러보기 →</a>
+          </div>
+          <div class="cart-summary" id="mypageCartSummary" hidden>
+            <p class="cart-summary__row">
+              <span>총 수량</span>
+              <span id="mypageCartTotalCount">0개</span>
+            </p>
+            <p class="cart-summary__row cart-summary__row--total">
+              <span>총 결제 금액</span>
+              <span id="mypageCartTotalPrice">₩0</span>
+            </p>
+            <a href="cart.html" class="btn btn--dark cart-summary__checkout">장바구니에서 결제하기</a>
+          </div>
+        </div>
+
+        <!-- ============================================================
+             PANEL 3 : 공유한 기억 (My Memory)
+             Store.getMySharedStories()로 내가 쓴 글만 모아 수정/삭제할 수 있습니다.
+             ============================================================ -->
+        <div class="mypage-panel" data-panel="memories" hidden>
+          <ul class="my-memory-list" id="myMemoryList"></ul>
+          <div class="account-list__empty" id="myMemoryEmpty" hidden>
+            <p class="account-list__empty-text">아직 공유한 기억이 없어요.</p>
+            <a href="memory-story.html" class="btn btn--outline">Share Your Memory 남기러 가기 →</a>
+          </div>
+        </div>
+
+        <!-- ============================================================
+             PANEL 4 : 문의 내역 (My Inquiry)
+             Store.getMyInquiries()로 내가 남긴 문의와 답변 상태를 확인합니다.
+             ============================================================ -->
+        <div class="mypage-panel" data-panel="inquiries" hidden>
+          <ul class="my-inquiry-list" id="myInquiryList"></ul>
+          <div class="account-list__empty" id="myInquiryEmpty" hidden>
+            <p class="account-list__empty-text">아직 남긴 문의가 없어요.</p>
+            <a href="contact.html" class="btn btn--outline">문의 남기러 가기 →</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ============================================================
+         기억 수정 모달 (공유한 기억 탭의 "수정하기" 버튼이 엽니다)
+         ============================================================ -->
+    <div class="modal-overlay" id="memoryEditModal" hidden>
+      <div class="modal memory-edit-modal" role="dialog" aria-modal="true" aria-labelledby="memoryEditTitle">
+        <h2 class="modal__title" id="memoryEditTitle">기억 수정하기</h2>
+        <form id="memoryEditForm" novalidate>
+          <div class="form-field">
+            <label for="memoryEditTitleInput">기억 제목</label>
+            <input type="text" id="memoryEditTitleInput" required />
+          </div>
+
+          <div class="form-field">
+            <label for="memoryEditContentInput">내용</label>
+            <textarea id="memoryEditContentInput" rows="5" required></textarea>
+          </div>
+
+          <div class="form-field">
+            <span>감정 선택</span>
+            <div class="share-emotions" id="memoryEditEmotions" role="group" aria-label="감정(컬렉션) 선택">
+              <button type="button" class="emotion-chip" data-emotion="healing" aria-pressed="false">
+                <span aria-hidden="true">🌿</span> Healing
+              </button>
+              <button type="button" class="emotion-chip" data-emotion="love" aria-pressed="false">
+                <span aria-hidden="true">🤍</span> Love
+              </button>
+              <button type="button" class="emotion-chip" data-emotion="new-beginning" aria-pressed="false">
+                <span aria-hidden="true">🌅</span> New Beginning
+              </button>
+              <button type="button" class="emotion-chip" data-emotion="nostalgia" aria-pressed="false">
+                <span aria-hidden="true">🍂</span> Nostalgia
+              </button>
+            </div>
+          </div>
+
+          <p class="auth-form__error" id="memoryEditError" role="alert" hidden></p>
+
+          <div class="modal__buttons">
+            <button type="button" class="btn btn--outline" id="memoryEditCancel">취소</button>
+            <button type="submit" class="btn btn--dark">저장하기</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- ============================================================
+         삭제 확인 모달 (공유한 기억 / 문의 내역 공용)
+         ============================================================ -->
+    <div class="modal-overlay" id="confirmDeleteModal" hidden>
+      <div class="modal" role="dialog" aria-modal="true" aria-labelledby="confirmDeleteTitle">
+        <p class="modal__icon" aria-hidden="true">🗑️</p>
+        <h2 class="modal__title" id="confirmDeleteTitle">삭제하시겠습니까?</h2>
+        <p class="modal__desc" id="confirmDeleteDesc">삭제하면 되돌릴 수 없습니다.</p>
+        <div class="modal__buttons">
+          <button type="button" class="btn btn--outline" id="confirmDeleteCancel">취소</button>
+          <button type="button" class="btn btn--dark" id="confirmDeleteOk">삭제하기</button>
+        </div>
+      </div>
+    </div>
+
+    <footer class="site-footer">
+      <div class="site-footer__top">
+        <span class="logo logo--footer">MOMENT</span>
+        <p class="site-footer__philosophy">
+          우리는 향수를 파는 대신, 기억을 담는 방법을 만듭니다.<br />
+          Moment는 당신의 순간을 향으로 기록합니다.
+        </p>
+      </div>
+      <div class="site-footer__bottom">
+        <nav class="site-footer__social" aria-label="소셜 미디어 및 연락처">
+          <a href="#" target="_blank" rel="noopener">Instagram</a>
+          <a href="#" target="_blank" rel="noopener">YouTube</a>
+          <a href="contact.html">Contact</a>
+        </nav>
+        <p class="site-footer__copyright">© 2026 MOMENT. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <!-- 스크립트 : 데이터 → 저장소 → 렌더 헬퍼 → 공통 기능 → 이 페이지 전용 로직 순서로 로드 -->
+    <script src="js/data/perfumes-data.js"></script>
+    <script src="js/store.js"></script>
+    <script src="js/render-helpers.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/mypage.js"></script>
+  </body>
+</html>

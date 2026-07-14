@@ -1,0 +1,214 @@
+/* 경로: css/product-detail.css */
+
+/* ==========================================================================
+   0. 공통 컨테이너
+   ========================================================================== */
+.detail-container {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 140px var(--gutter) 0;
+}
+
+.detail-back {
+  display: inline-block;
+  margin-bottom: 48px;
+  font-size: 0.9rem;
+  color: var(--color-warm-gray);
+}
+
+/* ==========================================================================
+   1. SECTION 1 : 상품 기본 정보
+   ========================================================================== */
+.product-detail {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--gutter);
+  padding-bottom: 100px;
+}
+
+.product-detail__media img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border-radius: 20px;
+}
+
+.product-detail__subtitle {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+  color: var(--color-olive);
+}
+
+.product-detail__name {
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-size: clamp(2rem, 4vw, 3rem);
+  margin: 0 0 16px;
+  color: var(--color-charcoal);
+}
+
+.product-detail__price {
+  font-size: 1.3rem;
+  margin: 0 0 12px;
+  color: var(--color-charcoal);
+}
+
+.product-detail__rating {
+  color: var(--color-gold);
+  letter-spacing: 0.1em;
+  margin: 0 0 32px;
+}
+
+/* 수량 선택 */
+.quantity-stepper {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid rgba(42, 39, 35, 0.2);
+  border-radius: 999px;
+  overflow: hidden;
+  margin-bottom: 32px;
+}
+
+.quantity-stepper button {
+  width: 40px;
+  height: 40px;
+  background: none;
+  border: none;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+.quantity-stepper input {
+  width: 48px;
+  text-align: center;
+  border: none;
+  border-left: 1px solid rgba(42, 39, 35, 0.2);
+  border-right: 1px solid rgba(42, 39, 35, 0.2);
+  height: 40px;
+  /* 브라우저 기본 숫자 스피너 제거 */
+  -moz-appearance: textfield;
+}
+
+.quantity-stepper input::-webkit-outer-spin-button,
+.quantity-stepper input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* 구매 버튼 */
+.product-detail__buttons {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.btn--outline {
+  background: transparent;
+  color: var(--color-charcoal);
+  border-color: var(--color-charcoal);
+}
+
+.btn--outline:hover {
+  background: var(--color-charcoal);
+  color: var(--color-ivory);
+}
+
+/* 찜 버튼 : 기본 모양은 .btn.btn--outline이 담당하고, 여기서는 찜 상태(aria-pressed)에
+   따른 하이라이트만 추가합니다. */
+.wish-toggle-btn[aria-pressed="true"] {
+  background-color: var(--color-gold-light);
+  border-color: var(--color-gold);
+  color: var(--color-charcoal);
+}
+
+.wish-toggle-btn[aria-pressed="true"] #wishIcon {
+  color: var(--color-charcoal);
+}
+
+/* ==========================================================================
+   2. SECTION 2 : NOTES
+   ========================================================================== */
+.notes-block {
+  padding: 64px 0;
+  border-top: 1px solid rgba(42, 39, 35, 0.1);
+}
+
+.notes-block__heading {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  margin: 0 0 32px;
+}
+
+.notes-block__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.notes-block__group h3 {
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--color-gold);
+  margin: 0 0 12px;
+}
+
+.notes-block__group ul {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.9rem;
+  color: var(--color-charcoal);
+}
+
+/* ==========================================================================
+   3. SECTION 3 : STORY
+   ========================================================================== */
+.detail-story {
+  padding: 64px 0;
+  border-top: 1px solid rgba(42, 39, 35, 0.1);
+  text-align: center;
+}
+
+.detail-story__lines p {
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-size: clamp(1.2rem, 2.4vw, 1.6rem);
+  line-height: 1.7;
+  margin: 0;
+  color: var(--color-charcoal);
+}
+
+.detail-story__desc {
+  margin: 24px 0 0;
+  color: var(--color-warm-gray);
+  font-size: 0.95rem;
+}
+
+/* ==========================================================================
+   4. SECTION 4 : RELATED PRODUCTS
+   ========================================================================== */
+.related-products {
+  padding: 64px 0 140px;
+  border-top: 1px solid rgba(42, 39, 35, 0.1);
+}
+
+.related-products__heading {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  margin: 0 0 32px;
+}
+
+/* ==========================================================================
+   5. 반응형
+   ========================================================================== */
+@media (max-width: 860px) {
+  .product-detail {
+    grid-template-columns: 1fr;
+  }
+
+  .notes-block__grid {
+    grid-template-columns: 1fr;
+  }
+}

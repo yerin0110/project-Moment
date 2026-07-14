@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Collection | Moment | Memory Archive</title>
+    <meta
+      name="description"
+      content="Moment의 네 가지 향 컬렉션 - Healing, Love, New Beginning, Nostalgia. 오늘의 감정과 가장 닮은 향을 찾아보세요."
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/collection.css" />
+  </head>
+  <body data-auth="guest">
+    <!-- ============================================================
+         HEADER : 이 페이지는 히어로 영상이 없으므로 처음부터
+         is-scrolled 상태(아이보리 배경 + 어두운 글자)로 고정합니다.
+         (id="hero" 요소가 없어 main.js의 스크롤 감지 로직은 동작하지 않고,
+          여기서 지정한 클래스가 그대로 유지됩니다)
+         ============================================================ -->
+    <header class="site-header is-scrolled" id="siteHeader">
+      <div class="site-header__inner">
+        <a href="index.html" class="logo" aria-label="Moment 홈으로 이동">MOMENT</a>
+
+        <nav class="main-nav" aria-label="주요 메뉴">
+          <ul class="main-nav__list">
+            <li><a href="brand.html">Brand</a></li>
+            <li><a href="collection.html" aria-current="page">Collection</a></li>
+            <li><a href="memory-story.html">Memory Story</a></li>
+            <li><a href="archive.html">Archive</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </nav>
+
+        <div class="utility-nav">
+          <a href="wishlist.html" class="icon-btn utility-nav__auth-only" aria-label="찜한 상품">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M12 20s-7-4.35-9.5-8.8C.7 7.6 2 4 5.6 4c2 0 3.3 1 4.4 2.6C11.1 5 12.4 4 14.4 4 18 4 19.3 7.6 17.5 11.2 15 15.65 12 20 12 20Z" />
+            </svg>
+          </a>
+          <a href="cart.html" class="icon-btn utility-nav__auth-only" aria-label="장바구니">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M4 6h16l-1.5 10.5a2 2 0 0 1-2 1.5H7.5a2 2 0 0 1-2-1.5L4 6Z" />
+              <path d="M8 6V5a4 4 0 1 1 8 0v1" />
+            </svg>
+          </a>
+          <a href="mypage.html" class="icon-btn utility-nav__auth-only" aria-label="마이페이지">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5">
+              <circle cx="12" cy="8" r="3.4" />
+              <path d="M4.5 20c1.2-4 4-6 7.5-6s6.3 2 7.5 6" />
+            </svg>
+          </a>
+          <button type="button" class="text-btn" id="authToggleBtn">Login</button>
+        </div>
+
+        <button type="button" class="menu-toggle" id="menuToggle" aria-label="메뉴 열기" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </header>
+
+    <main>
+      <!-- ============================================================
+           SECTION 1 : COLLECTION INTRO
+           ============================================================ -->
+      <section class="collection-intro">
+        <p class="eyebrow center">Collection</p>
+        <h1 class="section-title center">
+          기억은 모두 다르기에,<br />
+          향도 하나일 수 없습니다.
+        </h1>
+        <p class="collection-intro__desc">오늘의 감정과 가장 닮은 향을 만나보세요.</p>
+      </section>
+
+      <!-- ============================================================
+           오늘의 향수 : PERFUMES 24개 중 4개를 날짜 기준으로 무작위 노출합니다.
+           (js/collection.js의 renderTodayPerfumes() 참고 - 같은 날에는 새로고침해도
+            항상 같은 4개가 보이고, 자정이 지나면 다른 4개로 바뀝니다)
+           카드를 클릭하면 바로 해당 상품의 구매 페이지(product-detail.html)로 이동합니다.
+           ============================================================ -->
+      <section class="today-perfumes" aria-label="오늘의 향수">
+        <p class="today-perfumes__label">Today's Scent</p>
+        <ul class="today-perfumes__grid" id="todayPerfumesGrid"></ul>
+      </section>
+
+      <!-- ============================================================
+           SECTION 2 : FILTER
+           ============================================================ -->
+      <section class="filter" id="filterSection">
+        <!-- 아래 "기억으로 찾기" 칩에서 컬렉션을 선택했을 때만 나타나는 활성 필터 표시 -->
+        <p class="filter__active-collection" id="activeCollectionTag" hidden>
+          <span id="activeCollectionLabel"></span>
+          <button type="button" id="clearCollectionFilter" aria-label="컬렉션 필터 해제">✕</button>
+        </p>
+
+        <div class="filter-group">
+          <p class="filter-group__label">카테고리</p>
+          <div class="filter-chips" id="categoryChips" role="group" aria-label="카테고리 필터">
+            <button type="button" class="filter-chip" data-category="all" aria-pressed="true">All</button>
+            <button type="button" class="filter-chip" data-category="new" aria-pressed="false">New</button>
+            <button type="button" class="filter-chip" data-category="best" aria-pressed="false">Best</button>
+            <button type="button" class="filter-chip" data-category="memory" aria-pressed="false">Memory</button>
+          </div>
+        </div>
+
+        <div class="filter-group">
+          <!-- 제목은 "기억으로 찾기" 그대로 두고, 검색어만 컬렉션 이름으로 교체했습니다.
+               하나를 누르면 해당 컬렉션에 속한 향수만 Product Grid에 남습니다. -->
+          <p class="filter-group__label">기억으로 찾기</p>
+          <div class="filter-chips" id="collectionChips" role="group" aria-label="컬렉션으로 찾기">
+            <button type="button" class="filter-chip" data-collection-id="healing" aria-pressed="false">Healing</button>
+            <button type="button" class="filter-chip" data-collection-id="love" aria-pressed="false">Love</button>
+            <button type="button" class="filter-chip" data-collection-id="new-beginning" aria-pressed="false">New Beginning</button>
+            <button type="button" class="filter-chip" data-collection-id="nostalgia" aria-pressed="false">Nostalgia</button>
+          </div>
+        </div>
+
+        <div class="filter-group">
+          <p class="filter-group__label">향으로 찾기</p>
+          <div class="filter-chips" id="scentChips" role="group" aria-label="향 노트 필터">
+            <button type="button" class="filter-chip" data-scent="Bergamot" aria-pressed="false">Bergamot</button>
+            <button type="button" class="filter-chip" data-scent="Fig" aria-pressed="false">Fig</button>
+            <button type="button" class="filter-chip" data-scent="Green Tea" aria-pressed="false">Green Tea</button>
+            <button type="button" class="filter-chip" data-scent="Rose" aria-pressed="false">Rose</button>
+            <button type="button" class="filter-chip" data-scent="Lavender" aria-pressed="false">Lavender</button>
+            <button type="button" class="filter-chip" data-scent="Rain Accord" aria-pressed="false">Rain Accord</button>
+            <button type="button" class="filter-chip" data-scent="Cedarwood" aria-pressed="false">Cedarwood</button>
+            <button type="button" class="filter-chip" data-scent="Sandalwood" aria-pressed="false">Sandalwood</button>
+            <button type="button" class="filter-chip" data-scent="Musk" aria-pressed="false">Musk</button>
+            <button type="button" class="filter-chip" data-scent="Amber" aria-pressed="false">Amber</button>
+            <button type="button" class="filter-chip" data-scent="Vanilla" aria-pressed="false">Vanilla</button>
+          </div>
+        </div>
+
+        <button type="button" class="filter__reset link-underline" id="resetFilters">필터 초기화</button>
+      </section>
+
+      <!-- ============================================================
+           SECTION 3 : PRODUCT GRID (js/collection.js가 렌더링)
+           ============================================================ -->
+      <section class="product-grid-section">
+        <ul class="product-grid" id="productGrid"></ul>
+        <p class="product-grid__empty" id="productGridEmpty" hidden>
+          조건에 맞는 향수를 찾지 못했어요. 필터를 조정해 보세요.
+        </p>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="site-footer__top">
+        <span class="logo logo--footer">MOMENT</span>
+        <p class="site-footer__philosophy">
+          우리는 향수를 파는 대신, 기억을 담는 방법을 만듭니다.<br />
+          Moment는 당신의 순간을 향으로 기록합니다.
+        </p>
+      </div>
+      <div class="site-footer__bottom">
+        <nav class="site-footer__social" aria-label="소셜 미디어 및 연락처">
+          <a href="#" target="_blank" rel="noopener">Instagram</a>
+          <a href="#" target="_blank" rel="noopener">YouTube</a>
+          <a href="contact.html">Contact</a>
+        </nav>
+        <p class="site-footer__copyright">© 2026 MOMENT. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <!-- 스크립트 : 데이터 → 저장소 → 렌더 헬퍼 → 이 페이지 전용 로직 순서로 로드 -->
+    <script src="js/data/perfumes-data.js"></script>
+    <script src="js/store.js"></script>
+    <script src="js/render-helpers.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/collection.js"></script>
+  </body>
+</html>
