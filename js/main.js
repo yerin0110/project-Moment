@@ -69,9 +69,15 @@ function initIntroSequence() {
   const intro = document.getElementById("intro");
   const heroVideo = document.getElementById("heroVideo");
   const heroCaption = document.getElementById("heroCaption");
+  const header = document.getElementById("siteHeader");
   if (!intro) return;
 
   const STORAGE_KEY = "moment_intro_seen";
+
+  // 인트로 문구가 떠 있는 동안, 헤더도 미리 숨겨둡니다.
+  // 헤더는 어차피 인트로 오버레이(z-index 200) 아래 깔려 화면엔 안 보이던 상태라
+  // 화면 깜빡임 없이 바로 적용됩니다.
+  if (header) header.classList.add("header--pre-reveal");
 
   function playHeroVideo() {
     if (!heroVideo) return;
@@ -88,6 +94,12 @@ function initIntroSequence() {
     heroCaption.classList.add("is-visible");
   }
 
+  // 영상·캡션과 같은 타이밍에 헤더도 위에서 살짝 내려오며 페이드인되도록 함
+  function showHeader() {
+    if (!header) return;
+    header.classList.remove("header--pre-reveal");
+  }
+
   // 같은 브라우저 탭(세션) 안에서 이미 인트로를 본 적이 있다면
   // 문구 애니메이션 없이 즉시 건너뛰고 영상+메뉴 화면부터 보여줍니다.
   // (다른 메뉴로 이동했다가 로고를 눌러 홈으로 돌아오는 경우도 여기에 해당)
@@ -95,6 +107,7 @@ function initIntroSequence() {
     intro.classList.add("is-skipped");
     playHeroVideo();
     showHeroCaption();
+    showHeader();
     return;
   }
 
@@ -116,9 +129,10 @@ function initIntroSequence() {
     // 모든 문구를 다 보여줬다면 인트로 전체를 사라지게 함
     if (index >= lines.length) {
       intro.classList.add("is-done");
-      // 자막이 완전히 끝난 시점에 비로소 영상을 재생 시작하고, 히어로 캡션을 페이드인 시킵니다.
+      // 자막이 완전히 끝난 시점에 비로소 영상을 재생 시작하고, 히어로 캡션과 헤더를 페이드인 시킵니다.
       playHeroVideo();
       showHeroCaption();
+      showHeader();
       // 이번 세션에서는 인트로를 다시 보여주지 않도록 기록
       sessionStorage.setItem(STORAGE_KEY, "true");
       return;
