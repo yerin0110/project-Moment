@@ -29,7 +29,9 @@
          ============================================================ -->
     <header class="site-header is-scrolled" id="siteHeader">
       <div class="site-header__inner">
-        <a href="index.html" class="logo" aria-label="Moment 홈으로 이동">MOMENT</a>
+        <a href="index.html" class="logo" aria-label="Moment 홈으로 이동"
+          >MOMENT</a
+        >
 
         <nav class="main-nav" aria-label="주요 메뉴">
           <ul class="main-nav__list">
@@ -42,27 +44,72 @@
         </nav>
 
         <div class="utility-nav">
-          <a href="wishlist.html" class="icon-btn utility-nav__auth-only" aria-label="찜한 상품">
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5">
-              <path d="M12 20s-7-4.35-9.5-8.8C.7 7.6 2 4 5.6 4c2 0 3.3 1 4.4 2.6C11.1 5 12.4 4 14.4 4 18 4 19.3 7.6 17.5 11.2 15 15.65 12 20 12 20Z" />
+          <a
+            href="wishlist.html"
+            class="icon-btn utility-nav__auth-only"
+            aria-label="찜한 상품"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              width="20"
+              height="20"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+            >
+              <path
+                d="M12 20s-7-4.35-9.5-8.8C.7 7.6 2 4 5.6 4c2 0 3.3 1 4.4 2.6C11.1 5 12.4 4 14.4 4 18 4 19.3 7.6 17.5 11.2 15 15.65 12 20 12 20Z"
+              />
             </svg>
           </a>
-          <a href="cart.html" class="icon-btn utility-nav__auth-only" aria-label="장바구니">
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5">
-              <path d="M4 6h16l-1.5 10.5a2 2 0 0 1-2 1.5H7.5a2 2 0 0 1-2-1.5L4 6Z" />
+          <a
+            href="cart.html"
+            class="icon-btn utility-nav__auth-only"
+            aria-label="장바구니"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              width="20"
+              height="20"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+            >
+              <path
+                d="M4 6h16l-1.5 10.5a2 2 0 0 1-2 1.5H7.5a2 2 0 0 1-2-1.5L4 6Z"
+              />
               <path d="M8 6V5a4 4 0 1 1 8 0v1" />
             </svg>
           </a>
-          <a href="mypage.html" class="icon-btn utility-nav__auth-only" aria-label="마이페이지">
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5">
+          <a
+            href="mypage.html"
+            class="icon-btn utility-nav__auth-only"
+            aria-label="마이페이지"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              width="20"
+              height="20"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+            >
               <circle cx="12" cy="8" r="3.4" />
               <path d="M4.5 20c1.2-4 4-6 7.5-6s6.3 2 7.5 6" />
             </svg>
           </a>
-          <button type="button" class="text-btn" id="authToggleBtn">Login</button>
+          <button type="button" class="text-btn" id="authToggleBtn">
+            Login
+          </button>
         </div>
 
-        <button type="button" class="menu-toggle" id="menuToggle" aria-label="메뉴 열기" aria-expanded="false">
+        <button
+          type="button"
+          class="menu-toggle"
+          id="menuToggle"
+          aria-label="메뉴 열기"
+          aria-expanded="false"
+        >
           <span></span><span></span><span></span>
         </button>
       </div>
@@ -98,7 +145,9 @@
             <span class="contact-info__icon" aria-hidden="true">✉</span>
             <span class="contact-info__label">Email</span>
             <p class="contact-info__text">
-              <a href="mailto:hello@memoryperfume.com">hello@memoryperfume.com</a>
+              <a href="mailto:hello@memoryperfume.com"
+                >hello@memoryperfume.com</a
+              >
             </p>
           </li>
           <li class="contact-info__card">
@@ -141,7 +190,9 @@
             궁금한 점이나<br />
             전하고 싶은 이야기를 남겨주세요.
           </h2>
-          <p class="contact-form-section__desc">가능한 빠르게 답변드리겠습니다.</p>
+          <p class="contact-form-section__desc">
+            가능한 빠르게 답변드리겠습니다.
+          </p>
         </div>
 
         <form class="contact-form auth-only" id="contactForm" novalidate hidden>
@@ -160,12 +211,24 @@
 
           <div class="form-field">
             <label for="contactName">Name</label>
-            <input type="text" id="contactName" name="name" autocomplete="name" required />
+            <input
+              type="text"
+              id="contactName"
+              name="name"
+              autocomplete="name"
+              required
+            />
           </div>
 
           <div class="form-field">
             <label for="contactEmail">Email</label>
-            <input type="email" id="contactEmail" name="email" autocomplete="email" required />
+            <input
+              type="email"
+              id="contactEmail"
+              name="email"
+              autocomplete="email"
+              required
+            />
           </div>
 
           <div class="form-field form-field--full">
@@ -175,18 +238,34 @@
 
           <div class="form-field form-field--full">
             <label for="contactMessage">Message</label>
-            <textarea id="contactMessage" name="message" rows="6" required></textarea>
+            <textarea
+              id="contactMessage"
+              name="message"
+              rows="6"
+              required
+            ></textarea>
           </div>
 
-          <p class="contact-form__error" id="contactFormError" role="alert" hidden></p>
+          <p
+            class="contact-form__error"
+            id="contactFormError"
+            role="alert"
+            hidden
+          ></p>
 
-          <button type="submit" class="btn btn--dark contact-form__submit">Send Message</button>
+          <button type="submit" class="btn btn--dark contact-form__submit">
+            Send Message
+          </button>
         </form>
 
         <!-- 비로그인 상태에서 폼 대신 노출되는 안내 블록 (js/main.js가 로그인 상태에 따라 전환) -->
         <div class="login-gate guest-only" id="contactLoginGate">
-          <p class="login-gate__desc">문의 남기기는 로그인 후 이용하실 수 있습니다.</p>
-          <a href="login.html" class="btn btn--dark login-gate__login-link">로그인하기</a>
+          <p class="login-gate__desc">
+            문의 남기기는 로그인 후 이용하실 수 있습니다.
+          </p>
+          <a href="login.html" class="btn btn--dark login-gate__login-link"
+            >로그인하기</a
+          >
         </div>
       </section>
 
@@ -199,40 +278,63 @@
 
         <ul class="faq-list" id="faqList">
           <li class="faq-item">
-            <button type="button" class="faq-item__question" aria-expanded="false" aria-controls="faqAnswer1">
+            <button
+              type="button"
+              class="faq-item__question"
+              aria-expanded="false"
+              aria-controls="faqAnswer1"
+            >
               <span>배송은 얼마나 걸리나요?</span>
               <span class="faq-item__icon" aria-hidden="true">↓</span>
             </button>
             <div class="faq-item__answer-wrap">
               <div class="faq-item__answer-inner">
-                <p class="faq-item__answer" id="faqAnswer1">평균 2~3일 소요됩니다.</p>
+                <p class="faq-item__answer" id="faqAnswer1">
+                  평균 2~3일 소요됩니다.
+                </p>
               </div>
             </div>
           </li>
 
           <li class="faq-item">
-            <button type="button" class="faq-item__question" aria-expanded="false" aria-controls="faqAnswer2">
+            <button
+              type="button"
+              class="faq-item__question"
+              aria-expanded="false"
+              aria-controls="faqAnswer2"
+            >
               <span>교환 및 환불이 가능한가요?</span>
               <span class="faq-item__icon" aria-hidden="true">↓</span>
             </button>
             <div class="faq-item__answer-wrap">
               <div class="faq-item__answer-inner">
-                <p class="faq-item__answer" id="faqAnswer2">미개봉 제품에 한하여 가능합니다.</p>
+                <p class="faq-item__answer" id="faqAnswer2">
+                  미개봉 제품에 한하여 가능합니다.
+                </p>
               </div>
             </div>
           </li>
 
           <li class="faq-item">
-            <button type="button" class="faq-item__question" aria-expanded="false" aria-controls="faqAnswer3">
+            <button
+              type="button"
+              class="faq-item__question"
+              aria-expanded="false"
+              aria-controls="faqAnswer3"
+            >
               <span>향 추천을 받을 수 있나요?</span>
               <span class="faq-item__icon" aria-hidden="true">↓</span>
             </button>
             <div class="faq-item__answer-wrap">
               <div class="faq-item__answer-inner">
                 <p class="faq-item__answer" id="faqAnswer3">
-                  Memory Finder를 이용하면 당신에게 어울리는 향을 추천받을 수 있습니다.
+                  Memory Finder를 이용하면 당신에게 어울리는 향을 추천받을 수
+                  있습니다.
                 </p>
-                <a href="memory-story.html" class="link-underline faq-item__link">
+                <a
+                  href="memory-story.html"
+                  class="link-underline faq-item__link"
+                >
                   Memory Finder 이용해보기 <span class="arrow">→</span>
                 </a>
               </div>
@@ -244,15 +346,17 @@
       <!-- ============================================================
            SECTION 5 : VISIT OUR STORE
            -------------------------------------------------------------
-           - 실제 지도 대신 쇼룸 이미지만 사용합니다.
-           - "View Location" 버튼을 누르면 같은 이미지를 더 크게 보여주는
-             라이트박스 모달(#storeImageModal)이 열립니다.
+           - 쇼룸 사진(#storeImage)을 클릭하면 그 사진 자체를 확대해서 보여줍니다.
+           - "View Location" 버튼을 누르면 실제 지도 대신, 지정해둔 위치
+             안내 이미지(js/contact.js의 LOCATION_IMAGE_SRC)를 보여줍니다.
+           - 두 경우 모두 같은 라이트박스 모달(#storeImageModal)을 재사용하되,
+             보여주는 이미지만 다르게 채워 넣습니다.
            ============================================================ -->
       <section class="visit-store">
         <div class="visit-store__media">
           <img
             id="storeImage"
-            src="images/contact/showroom.jpg"
+            src="images/contact/showroom.jpeg"
             alt="Memory Perfume Studio 쇼룸 내부, 감성적인 조명과 향수 진열대"
             loading="lazy"
           />
@@ -268,7 +372,9 @@
             향을 직접 경험하고<br />
             전문적인 시향 서비스를 받아보실 수 있습니다.
           </p>
-          <button type="button" class="btn btn--outline" id="viewLocationBtn">View Location</button>
+          <button type="button" class="btn btn--outline" id="viewLocationBtn">
+            View Location
+          </button>
         </div>
       </section>
     </main>
@@ -277,22 +383,62 @@
          문의 완료 모달 (Send a Message 성공 시)
          ============================================================ -->
     <div class="modal-overlay" id="contactModal" hidden>
-      <div class="modal contact-modal" role="dialog" aria-modal="true" aria-labelledby="contactModalTitle">
-        <button type="button" class="contact-modal__close" id="contactModalClose" aria-label="닫기">✕</button>
+      <div
+        class="modal contact-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="contactModalTitle"
+      >
+        <button
+          type="button"
+          class="contact-modal__close"
+          id="contactModalClose"
+          aria-label="닫기"
+        >
+          ✕
+        </button>
         <p class="contact-modal__icon" aria-hidden="true">✓</p>
         <h2 class="contact-modal__title" id="contactModalTitle">감사합니다.</h2>
         <p class="contact-modal__desc">문의가 정상적으로 접수되었습니다.</p>
-        <button type="button" class="btn btn--dark contact-modal__confirm" id="contactModalConfirm">확인</button>
+        <button
+          type="button"
+          class="btn btn--dark contact-modal__confirm"
+          id="contactModalConfirm"
+        >
+          확인
+        </button>
       </div>
     </div>
 
     <!-- ============================================================
-         쇼룸 이미지 라이트박스 모달 (View Location 클릭 시)
+         쇼룸 사진 확대 / 위치 안내 이미지 공용 라이트박스 모달
+         -------------------------------------------------------------
+         - 쇼룸 사진 클릭, "View Location" 버튼 클릭 두 가지 트리거가
+           이 모달 하나를 공유합니다.
+         - 아래 src/alt는 초기 기본값일 뿐이며, 실제로 어떤 이미지가
+           보이는지는 클릭한 트리거에 따라 js/contact.js가 매번
+           다시 채워 넣습니다.
          ============================================================ -->
     <div class="modal-overlay" id="storeImageModal" hidden>
-      <div class="modal store-image-modal" role="dialog" aria-modal="true" aria-label="쇼룸 이미지 크게 보기">
-        <button type="button" class="store-image-modal__close" id="storeImageModalClose" aria-label="닫기">✕</button>
-        <img id="storeImageModalImg" src="" alt="Memory Perfume Studio 쇼룸 이미지" />
+      <div
+        class="modal store-image-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-label="이미지 크게 보기"
+      >
+        <button
+          type="button"
+          class="store-image-modal__close"
+          id="storeImageModalClose"
+          aria-label="닫기"
+        >
+          ✕
+        </button>
+        <img
+          id="storeImageModalImg"
+          src="images/contact/location-map.jpg"
+          alt="Memory Perfume Studio 위치 안내 이미지 (약도)"
+        />
       </div>
     </div>
 
@@ -314,7 +460,9 @@
           <a href="#" target="_blank" rel="noopener">YouTube</a>
           <a href="contact.html">Contact</a>
         </nav>
-        <p class="site-footer__copyright">© 2026 MOMENT. All rights reserved.</p>
+        <p class="site-footer__copyright">
+          © 2026 MOMENT. All rights reserved.
+        </p>
       </div>
     </footer>
 
