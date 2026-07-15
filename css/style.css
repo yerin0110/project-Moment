@@ -171,7 +171,8 @@ input:focus-visible {
   border-radius: 999px;
   border: 1px solid transparent;
   cursor: pointer;
-  transition: background-color var(--duration-fast) var(--ease-default),
+  transition:
+    background-color var(--duration-fast) var(--ease-default),
     color var(--duration-fast) var(--ease-default),
     border-color var(--duration-fast) var(--ease-default);
 }
@@ -257,7 +258,8 @@ input:focus-visible {
   display: flex;
   align-items: center;
   color: var(--color-ivory);
-  transition: background-color var(--duration-fast) var(--ease-default),
+  transition:
+    background-color var(--duration-fast) var(--ease-default),
     color var(--duration-fast) var(--ease-default),
     opacity var(--duration-slow) var(--ease-default),
     transform var(--duration-slow) var(--ease-default);
@@ -282,7 +284,7 @@ input:focus-visible {
 
 .site-header__inner {
   width: 100%;
-  max-width: var(--container-max);
+  /* max-width: var(--container-max); */
   margin: 0 auto;
   padding: 0 var(--gutter);
   display: flex;
@@ -300,7 +302,7 @@ input:focus-visible {
 
 .main-nav__list {
   display: flex;
-  gap: 36px;
+  gap: 45px;
 }
 
 .main-nav__list a {
@@ -349,7 +351,8 @@ input:focus-visible {
   font-size: 0.85rem;
   letter-spacing: 0.03em;
   cursor: pointer;
-  transition: background-color var(--duration-fast) var(--ease-default),
+  transition:
+    background-color var(--duration-fast) var(--ease-default),
     color var(--duration-fast) var(--ease-default);
 }
 
@@ -415,7 +418,11 @@ body[data-auth="member"] .utility-nav__auth-only {
 .hero__scrim {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(11, 11, 10, 0.15) 0%, rgba(11, 11, 10, 0.55) 100%);
+  background: linear-gradient(
+    180deg,
+    rgba(11, 11, 10, 0.15) 0%,
+    rgba(11, 11, 10, 0.55) 100%
+  );
 }
 
 .hero__content {
@@ -438,7 +445,8 @@ body[data-auth="member"] .utility-nav__auth-only {
   margin: 0 0 28px;
   opacity: 0;
   transform: translateY(14px);
-  transition: opacity var(--duration-slow) var(--ease-default),
+  transition:
+    opacity var(--duration-slow) var(--ease-default),
     transform var(--duration-slow) var(--ease-default);
 }
 
@@ -503,7 +511,9 @@ body[data-auth="member"] .utility-nav__auth-only {
 .perfume-card {
   position: relative;
   aspect-ratio: 3 / 4;
-  background-color: var(--color-ivory-dim); /* 이미지 로드 전/실패 시 대비용 배경 */
+  background-color: var(
+    --color-ivory-dim
+  ); /* 이미지 로드 전/실패 시 대비용 배경 */
   background-size: cover;
   background-position: center;
   overflow: hidden;
@@ -587,7 +597,8 @@ body[data-auth="member"] .utility-nav__auth-only {
   max-height: 0;
   opacity: 0;
   overflow: hidden;
-  transition: max-height var(--duration-fast) var(--ease-default),
+  transition:
+    max-height var(--duration-fast) var(--ease-default),
     opacity var(--duration-fast) var(--ease-default);
 }
 
@@ -611,7 +622,8 @@ body[data-auth="member"] .utility-nav__auth-only {
   max-height: 0;
   opacity: 0;
   overflow: hidden;
-  transition: max-height var(--duration-fast) var(--ease-default),
+  transition:
+    max-height var(--duration-fast) var(--ease-default),
     opacity var(--duration-fast) var(--ease-default);
 }
 
@@ -698,7 +710,8 @@ body[data-auth="member"] .utility-nav__auth-only {
   border: 1px solid var(--color-olive);
   border-radius: 999px;
   font-size: 0.9rem;
-  transition: background-color var(--duration-fast) var(--ease-default),
+  transition:
+    background-color var(--duration-fast) var(--ease-default),
     color var(--duration-fast) var(--ease-default);
 }
 

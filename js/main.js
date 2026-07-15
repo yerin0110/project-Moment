@@ -113,19 +113,13 @@ function initIntroSequence() {
 
   const lines = Array.from(intro.querySelectorAll(".intro__line"));
 
-  // 각 문구가 화면에 머무는 시간(ms). 문구 길이와 상관없이 리듬이 고르게 느껴지도록 균등하게 맞췄습니다.
-  // (기존 4번째 문구가 히어로 캡션으로 이동하면서 항목도 3개로 줄었습니다)
+  // 각 문구가 화면에 "떠 있는" 시간(ms). 페이드인/아웃 시간은 여기 포함되지 않습니다.
   const HOLD_DURATION = [1600, 1400, 1400];
   const FADE_DURATION = 900; // 아래 CSS(.intro__line transition: opacity 0.9s)와 반드시 맞춰줍니다.
 
-  let index = 0;
-
-  function showNextLine() {
-    // 이전 문구 숨기기
-    if (index > 0) {
-      lines[index - 1].classList.remove("is-active");
-    }
-
+  // 문구 하나의 라이프사이클 : 페이드인(FADE_DURATION) → 유지(hold) → 페이드아웃(FADE_DURATION)
+  // → 완전히 사라진 뒤에야 다음 문구를 호출합니다. (겹치지 않고 순차적으로 진행)
+  function showLine(index) {
     // 모든 문구를 다 보여줬다면 인트로 전체를 사라지게 함
     if (index >= lines.length) {
       intro.classList.add("is-done");
@@ -138,17 +132,25 @@ function initIntroSequence() {
       return;
     }
 
-    // 현재 문구 보여주기
-    lines[index].classList.add("is-active");
-
+    const line = lines[index];
     const hold = HOLD_DURATION[index] ?? 1400;
-    index += 1;
 
-    setTimeout(showNextLine, hold + FADE_DURATION);
+    // 1) 페이드인 시작
+    line.classList.add("is-active");
+
+    // 2) 페이드인 + 유지 시간이 지나면 페이드아웃 시작
+    setTimeout(() => {
+      line.classList.remove("is-active");
+
+      // 3) 페이드아웃이 완전히 끝난 뒤에야 다음 문구로 넘어감 (겹침 없음)
+      setTimeout(() => {
+        showLine(index + 1);
+      }, FADE_DURATION);
+    }, FADE_DURATION + hold);
   }
 
   // 페이지 진입 직후 짧은 텀을 두고 시작
-  setTimeout(showNextLine, 250);
+  setTimeout(() => showLine(0), 250);
 }
 
 /* ==========================================================================
